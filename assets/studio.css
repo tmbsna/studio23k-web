@@ -16,8 +16,8 @@
   --line: rgba(13,21,18,.14);
   --line-d: rgba(244,239,228,.2);
   --r: 28px;
-  --body: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --tech: "Chakra Petch", ui-monospace, monospace;
+  --body: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --tech: "Manrope", "Helvetica Neue", Arial, system-ui, sans-serif;
   --mark: "Syne", "Avenir Next", system-ui, sans-serif;
   --gx: max(16px, env(safe-area-inset-left, 0px), 3vw);
 }
@@ -33,7 +33,7 @@ ul, ol { list-style: none; }
 img, video { display: block; max-width: 100%; }
 :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
 .wrap { padding-inline: var(--gx); }
-.tag { font: 500 13px/1 var(--tech); letter-spacing: .1em; text-transform: uppercase; }
+.tag { font: 700 12px/1 var(--tech); letter-spacing: .12em; text-transform: uppercase; }
 .dim { opacity: .62; }
 
 /* Buttons: pill */
@@ -134,7 +134,7 @@ img, video { display: block; max-width: 100%; }
 .card:nth-child(6n+4) { background: var(--sky); } .card:nth-child(6n+5) { background: var(--orange); } .card:nth-child(6n+6) { background: #c9f2d8; }
 .card .n { display: flex; justify-content: space-between; }
 .card b { align-self: center; font: 800 clamp(64px, 7vw, 112px)/.85 var(--mark); letter-spacing: -.06em; }
-.card b small { display: block; font-size: clamp(20px, 1.9vw, 28px); overflow-wrap: anywhere; letter-spacing: -.03em; margin-top: 10px; }
+.card b small { display: block; font-size: clamp(18px, 1.5vw, 24px); overflow-wrap: anywhere; letter-spacing: -.03em; margin-top: 10px; }
 .card p { font-size: 18px; line-height: 1.3; font-weight: 500; }
 
 /* Services */

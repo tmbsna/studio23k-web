@@ -49,7 +49,7 @@ def head(title, desc, path, extra=None):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=2">
+<link rel="stylesheet" href="/assets/studio.css?v=3">
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
 </script>
