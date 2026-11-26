@@ -49,12 +49,14 @@ def head(title, desc, path, extra=None):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=3">
+<link rel="stylesheet" href="/assets/studio.css?v=4">
+<script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
 </script>
 </head>
 <body>
+<div class="pre" id="pre" aria-hidden="true"><i></i><b>studio23<span>k</span></b><i></i></div>
 <div class="cur" aria-hidden="true"></div>
 """
 
@@ -65,8 +67,11 @@ def nav(cur):
     return f"""<header class="nav">
   <a class="logo" href="/" aria-label="Studio23k, naslovna">studio23<b>k</b></a>
   <nav aria-label="Glavna navigacija"><ul>{lis}</ul></nav>
-  <a class="pill" href="/#kontakt">Javite se <span class="ar">→</span></a>
-  <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
+  <div class="end">
+    <button class="theme" type="button" id="theme" aria-label="Svijetla ili tamna tema" title="Svijetla / tamna tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+    <a class="pill" href="/#kontakt">Javite se <span class="ar">→</span></a>
+    <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
+  </div>
 </header>
 <div class="menu" id="menu" aria-hidden="true">
   <div class="row"><a class="logo" href="/">studio23<b>k</b></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
@@ -103,7 +108,7 @@ def footer():
   <div><span class="tag">Stranice</span><ul><li><a href="/#usluge">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
   <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
   <p class="big" aria-hidden="true">studio23<b>k</b></p>
-  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span><a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
+  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno: <a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
 </footer>
 
 <div class="chat" id="chat">
@@ -116,7 +121,7 @@ def footer():
 </div>
 
 <script src="/assets/js/lenis.min.js"></script>
-<script src="/assets/js/studio.js?v=2" defer></script>
+<script src="/assets/js/studio.js?v=4" defer></script>
 </body>
 </html>
 """
@@ -135,10 +140,14 @@ RADOVI = [
 KLIJENTI = ["Frida", "Antuntun", "Riva Rafting Centar", "Zrmanja Adventures", "Mićanovi Dvori", "DizajnPro", "LanaMar", "ZadarSub", "Goveer", "Focx", "Skroće", "Malta", "Lastavica", "Protex", "SolHome", "L-Design", "Dalmatica Mobility", "Calimero Sport", "Rildo", "Marco Polo's", "Manhatta", "Zadar Region Guide", "Mile", "TST Group"]
 
 
+KAT = {"Web": "web", "Web trgovina": "trgovina", "Identitet": "identitet"}
+
+
 def work_item(r):
     f, n, u, tags = r
     chips = "".join(f"<span>{t}</span>" for t in tags)
-    return f'<li class="rv"><a href="{u}" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/{f}.jpg" alt="Web stranica {n} na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>{n}</h3><span class="chips">{chips}</span></span></a></li>'
+    cats = " ".join(sorted({KAT[t] for t in tags if t in KAT}))
+    return f'<li class="rv" data-cat="{cats}"><a href="{u}" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/{f}.jpg" alt="Web stranica {n} na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>{n}</h3><span class="chips">{chips}</span></span></a></li>'
 
 
 USLUGE = [
@@ -280,7 +289,13 @@ def radovi():
   <p>Web stranice, trgovine i identiteti za tvrtke, turizam i lokalne brendove.</p>
 </section>
 <section class="work" style="padding-top:20px">
-  <ul class="grid2">
+  <div class="filt" role="group" aria-label="Filtriraj radove">
+    <button type="button" data-f="" aria-pressed="true">Sve<span>{len(RADOVI)}</span></button>
+    <button type="button" data-f="web" aria-pressed="false">Web stranice<span>{sum(1 for r in RADOVI if "Web" in r[3])}</span></button>
+    <button type="button" data-f="trgovina" aria-pressed="false">Web trgovine<span>{sum(1 for r in RADOVI if "Web trgovina" in r[3])}</span></button>
+    <button type="button" data-f="identitet" aria-pressed="false">Identitet<span>{sum(1 for r in RADOVI if "Identitet" in r[3])}</span></button>
+  </div>
+  <ul class="grid2" id="radoviGrid">
       {work}
   </ul>
 </section>

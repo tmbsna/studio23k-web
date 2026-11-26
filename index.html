@@ -18,7 +18,8 @@
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=3">
+<link rel="stylesheet" href="/assets/studio.css?v=4">
+<script>(function(){var d=document.documentElement;try{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}catch(e){}})();</script>
 <script type="application/ld+json">
 [
  {
@@ -125,12 +126,16 @@
 </script>
 </head>
 <body>
+<div class="pre" id="pre" aria-hidden="true"><i></i><b>studio23<span>k</span></b><i></i></div>
 <div class="cur" aria-hidden="true"></div>
 <header class="nav">
   <a class="logo" href="/" aria-label="Studio23k, naslovna">studio23<b>k</b></a>
   <nav aria-label="Glavna navigacija"><ul><li><a href="/#usluge">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a href="/tmbingo/" class="tmb">TMBingo</a></li></ul></nav>
-  <a class="pill" href="/#kontakt">Javite se <span class="ar">→</span></a>
-  <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
+  <div class="end">
+    <button class="theme" type="button" id="theme" aria-label="Svijetla ili tamna tema" title="Svijetla / tamna tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+    <a class="pill" href="/#kontakt">Javite se <span class="ar">→</span></a>
+    <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
+  </div>
 </header>
 <div class="menu" id="menu" aria-hidden="true">
   <div class="row"><a class="logo" href="/">studio23<b>k</b></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
@@ -194,10 +199,10 @@
 <section class="work" id="radovi">
   <div class="sec-h"><h2 class="rv">Izdvojeni<br>radovi<span class="o">.</span></h2><p class="rv">Klik vodi na stvarnu stranicu. Neka sami kažu kako rade.</p></div>
   <ul class="grid2">
-      <li class="rv"><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/antuntun.jpg" alt="Web stranica Antuntun na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Antuntun</h3><span class="chips"><span>Identitet</span><span>Web</span></span></span></a></li>
-      <li class="rv"><a href="https://frida-zadar.hr/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/frida.jpg" alt="Web stranica Frida na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Frida</h3><span class="chips"><span>Web</span><span>Upravljanje zgradama</span></span></span></a></li>
-      <li class="rv"><a href="https://focx.store/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/focx.jpg" alt="Web stranica Focx na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Focx</h3><span class="chips"><span>Web trgovina</span></span></span></a></li>
-      <li class="rv"><a href="https://dalmaticamobility.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/dalmatica.jpg" alt="Web stranica Dalmatica Mobility na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Dalmatica Mobility</h3><span class="chips"><span>Web</span><span>Selidbe</span></span></span></a></li>
+      <li class="rv" data-cat="identitet web"><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/antuntun.jpg" alt="Web stranica Antuntun na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Antuntun</h3><span class="chips"><span>Identitet</span><span>Web</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://frida-zadar.hr/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/frida.jpg" alt="Web stranica Frida na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Frida</h3><span class="chips"><span>Web</span><span>Upravljanje zgradama</span></span></span></a></li>
+      <li class="rv" data-cat="trgovina"><a href="https://focx.store/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/focx.jpg" alt="Web stranica Focx na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Focx</h3><span class="chips"><span>Web trgovina</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://dalmaticamobility.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/dalmatica.jpg" alt="Web stranica Dalmatica Mobility na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Dalmatica Mobility</h3><span class="chips"><span>Web</span><span>Selidbe</span></span></span></a></li>
   </ul>
   <div class="more"><a class="pill" href="/radovi/">Svi radovi <span class="ar">→</span></a></div>
 </section>
@@ -248,7 +253,7 @@
   <div><span class="tag">Stranice</span><ul><li><a href="/#usluge">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
   <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="https://tmbingo.com/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
   <p class="big" aria-hidden="true">studio23<b>k</b></p>
-  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span><a href="https://tmbingo.com/privatnost.html">Privatnost</a> · <a href="https://tmbingo.com/uvjeti.html">Uvjeti</a> · <a href="https://tmbingo.com/cjenik/">Cjenik</a></span></div>
+  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno: <a href="https://tmbingo.com/privatnost.html">Privatnost</a> · <a href="https://tmbingo.com/uvjeti.html">Uvjeti</a> · <a href="https://tmbingo.com/cjenik/">Cjenik</a></span></div>
 </footer>
 
 <div class="chat" id="chat">
@@ -261,6 +266,6 @@
 </div>
 
 <script src="/assets/js/lenis.min.js"></script>
-<script src="/assets/js/studio.js?v=2" defer></script>
+<script src="/assets/js/studio.js?v=4" defer></script>
 </body>
 </html>

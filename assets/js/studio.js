@@ -89,3 +89,31 @@
     if (!seen && !reduce) setTimeout(function () { chat.classList.add('open'); try { sessionStorage.setItem('s23k-chat', '1'); } catch (e) {} }, 6000);
   }
 })();
+
+/* Society-ideje: uvodna zavjesa, svijetla/tamna tema, filteri radova */
+(function () {
+  var d = document.documentElement;
+  var pre = document.getElementById('pre');
+  if (pre && !d.classList.contains('no-pre') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var go = function () { setTimeout(function () { pre.classList.add('out'); setTimeout(function () { pre.remove(); }, 1100); }, 650); };
+    if (document.readyState === 'complete') go(); else addEventListener('load', go);
+    setTimeout(function () { pre.classList.add('out'); }, 2500);
+  } else if (pre) pre.remove();
+
+  var tb = document.getElementById('theme');
+  if (tb) tb.addEventListener('click', function () {
+    var dark = d.dataset.theme !== 'dark';
+    if (dark) d.dataset.theme = 'dark'; else delete d.dataset.theme;
+    try { localStorage.setItem('s23k-tema', dark ? 'dark' : ''); } catch (e) {}
+  });
+
+  var grid = document.getElementById('radoviGrid');
+  document.querySelectorAll('.filt button').forEach(function (b, _, all) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.f;
+      all.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      grid.classList.toggle('f', !!f);
+      grid.querySelectorAll('li').forEach(function (li) { li.classList.toggle('out', !!f && li.dataset.cat.split(' ').indexOf(f) < 0); li.classList.add('in'); });
+    });
+  });
+})();
