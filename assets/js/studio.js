@@ -117,3 +117,9 @@
     });
   });
 })();
+
+/* Obrazac za upit: označi uslugu iz poveznice (?usluga=web-trgovine) */
+(function () {
+  var m = /[?&]usluga=([a-z-]+)/.exec(location.search); if (!m) return;
+  var c = document.querySelector('.fm input[data-slug="' + m[1] + '"]'); if (c) c.checked = true;
+})();

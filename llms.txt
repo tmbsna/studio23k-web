@@ -6,11 +6,21 @@ Studio23k ima dva načina suradnje:
 - Studio23k projekt: rješenje po mjeri za tvrtke, turizam, trgovine i brendove, s pisanom ponudom po projektu.
 - TMBingo by Studio23k (https://tmbingo.com): paket za male firme, obrte i apartmane. Web, dizajn i društvene mreže od 199 € mjesečno bez obveze trajanja, web stranica (landing page) od 299 €. Cjenik: https://tmbingo.com/cjenik/
 
-Kontakt: hello@studio23k.eu, +385 92 405 0600.
+Kontakt: pisani upit na https://studio23k.eu/upit/ ili hello@studio23k.eu. Studio23k radi online i pisano, bez sastanaka: upit, pisana ponuda, dizajn s komentarima u Figmi, izrada.
 
 ## Stranice
 - Naslovna: https://studio23k.eu/
+- Usluge: https://studio23k.eu/usluge/
+  - Web platforme po mjeri: https://studio23k.eu/usluge/web-platforme/
+  - Web trgovine: https://studio23k.eu/usluge/web-trgovine/
+  - Web aplikacije i sustavi: https://studio23k.eu/usluge/web-aplikacije/
+  - Brend identitet: https://studio23k.eu/usluge/brend-identitet/
+  - Foto i video: https://studio23k.eu/usluge/foto-video/
+  - Kampanje i tisak: https://studio23k.eu/usluge/kampanje-tisak/
+  - SEO i AI vidljivost: https://studio23k.eu/usluge/seo-ai-vidljivost/
+  - Održavanje i podrška: https://studio23k.eu/usluge/odrzavanje/
 - Radovi: https://studio23k.eu/radovi/
+- Upit (obrazac): https://studio23k.eu/upit/
 - TMBingo by Studio23k: https://studio23k.eu/tmbingo/
 - TMBingo: https://tmbingo.com/
 

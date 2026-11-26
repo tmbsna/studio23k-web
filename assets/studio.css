@@ -327,3 +327,71 @@ html.no-pre .pre { display: none; }
 .filt button span { opacity: .6; margin-left: 4px; font-size: .85em; }
 .grid2.f li { margin-top: 0 !important; }
 .grid2 li.out { display: none; }
+
+/* Usluge: poveznice s naslovne, proces bez sastanaka, podstranice, obrazac za upit */
+.svl h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.svl h3 a:focus-visible { outline: 0; } .svl li:has(a:focus-visible) { outline: 3px solid var(--orange); outline-offset: 4px; border-radius: 18px; }
+.svc .more { margin-top: 50px; }
+.cta .lead { margin-top: 26px; max-width: 46ch; font-size: clamp(18px, 1.6vw, 24px); line-height: 1.35; color: var(--mute-d); }
+.steps { padding: 0 var(--gx) 130px; }
+.steps ol { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: s; }
+.steps li { border-radius: var(--r); padding: 28px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); display: grid; gap: 14px; align-content: start; min-height: 260px; transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+.steps li:nth-child(1) { background: var(--sun); color: var(--ink); box-shadow: none; }
+.steps li:nth-child(3) { background: var(--pink); color: var(--ink); box-shadow: none; }
+.steps li:hover { transform: rotate(-1.5deg) translateY(-4px); }
+.steps h3 { font: 700 clamp(24px, 2.2vw, 34px)/1 var(--mark); letter-spacing: -.04em; margin-top: auto; }
+.steps p { opacity: .75; }
+@media (max-width: 1000px) { .steps ol { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .steps ol { grid-template-columns: 1fr; } .steps li { min-height: 0; } .steps h3 { margin-top: 30px; } }
+.phead .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.uhead h1 { font-size: clamp(48px, 8.4vw, 150px); max-width: 12ch; }
+.crumb { margin-bottom: 22px; opacity: .7; } .crumb a { text-decoration: underline; text-underline-offset: 3px; }
+.uimg { margin: 0 var(--gx) 110px; border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 10; }
+.uimg img { width: 100%; height: 100%; object-fit: cover; }
+.ugrid { padding: 0 var(--gx) 130px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: start; }
+.dob { margin-top: 26px; border-top: 2px solid var(--fg); }
+.dob li { padding: 20px 0; border-bottom: 2px solid var(--fg); font: 700 clamp(22px, 2.4vw, 38px)/1.05 var(--mark); letter-spacing: -.04em; display: flex; gap: 18px; }
+.dob li::before { content: "✦"; color: var(--orange); font-size: .7em; padding-top: .15em; }
+.za { border-radius: var(--r); padding: 30px; background: var(--deep); color: var(--cream); display: grid; gap: 8px; position: sticky; top: 100px; }
+.za .tag { color: var(--mute-d); display: block; }
+.za p { font-size: 18px; line-height: 1.45; }
+.za a.u, a.u { text-decoration: underline; text-underline-offset: 4px; }
+.za .nx { counter-reset: n; display: grid; gap: 10px; }
+.za .nx li { counter-increment: n; display: flex; gap: 12px; line-height: 1.4; }
+.za .nx li::before { content: counter(n); flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--orange); color: var(--ink); display: grid; place-items: center; font: 700 13px/1 var(--body); }
+@media (max-width: 900px) { .ugrid { grid-template-columns: 1fr; } .za { position: static; } .uimg { margin-bottom: 80px; } }
+.ost { padding: 0 var(--gx) 130px; display: grid; gap: 20px; }
+.ost div { display: flex; flex-wrap: wrap; gap: 10px; }
+.ulist { padding: 0 var(--gx) 130px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 56px 24px; }
+.ulist a { display: grid; gap: 12px; }
+.ulist .im { border-radius: var(--r); overflow: hidden; aspect-ratio: 16 / 10; margin-bottom: 8px; }
+.ulist img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.ulist a:hover img { transform: scale(1.04) rotate(-.6deg); }
+.ulist h2 { font: 700 clamp(28px, 3vw, 48px)/1 var(--mark); letter-spacing: -.045em; }
+.ulist a:hover h2 { color: var(--orange); }
+.ulist p { color: var(--mute); max-width: 48ch; }
+@media (max-width: 800px) { .ulist { grid-template-columns: 1fr; } }
+.upit { padding: 0 var(--gx) 130px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: start; }
+@media (max-width: 900px) { .upit { grid-template-columns: 1fr; } }
+.fm { display: grid; gap: 26px; min-width: 0; }
+.fm .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 600px) { .fm .two { grid-template-columns: 1fr; } }
+.fm .f { display: grid; gap: 8px; }
+.fm .f span, .fm legend { font: 700 12px/1 var(--tech); letter-spacing: .12em; text-transform: uppercase; }
+.fm input:not([type=checkbox]):not([type=radio]), .fm textarea { width: 100%; font: 500 18px/1.4 var(--body); color: var(--fg); background: var(--surface); border: 0; border-radius: 18px; padding: 16px 18px; box-shadow: inset 0 0 0 1.5px var(--line); transition: box-shadow .2s; }
+.fm textarea { resize: vertical; min-height: 180px; }
+.fm input:focus, .fm textarea:focus { outline: 0; box-shadow: inset 0 0 0 2.5px var(--orange); }
+.fm fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.fm legend { padding: 0; margin-bottom: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; cursor: pointer; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip span { display: inline-block; font: 600 15px/1 var(--body); padding: 12px 18px; border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); transition: background .2s, transform .25s cubic-bezier(.3,1.6,.5,1); }
+.chip:hover span { transform: rotate(-2deg); }
+.chip input:checked + span { background: var(--orange); color: var(--ink); box-shadow: none; }
+.chip input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 3px; }
+.fm .send { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+.fm .send p { font-size: 14px; } .fm .send a { text-decoration: underline; }
+:root[data-theme="dark"] .za { background: #050e0b; }
+:root[data-theme="dark"] .steps li:nth-child(1), :root[data-theme="dark"] .steps li:nth-child(3) { color: var(--ink); }
+.chip span { text-transform: none; letter-spacing: 0; }

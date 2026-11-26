@@ -27,3 +27,6 @@ python3 -m http.server 8000
 
 ## Izmjene stranica
 Naslovna, /radovi/ i /tmbingo/ generiraju se iz `izvor/build.py` (zajedničko zaglavlje i podnožje): `python3 izvor/build.py .`
+
+## Obrazac za upit (/upit/)
+Obrazac koristi Netlify Forms (`data-netlify="true"`, ime `upit`). Nakon prve objave u Netlifyju: Site configuration → Forms → uključiti otkrivanje obrazaca, pa pod Form notifications dodati e-mail obavijest na hello@studio23k.eu. Ilustracije usluga: `node izvor/usluge_slike.js .`
