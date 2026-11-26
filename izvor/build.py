@@ -1,29 +1,23 @@
 #!/usr/bin/env python3
-"""Generira statičke stranice za studio23k.eu (zajednički header i footer)."""
-import json, os, sys
+"""Generira statičke stranice za studio23k.eu (v2, razigrani stil). Pokretanje: python3 izvor/build.py ."""
+import json, os, re, sys
 
-OUT = sys.argv[1]
+OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 ADRESA = "Jakova Gotovca 18"
 MAIL = "hello@studio23k.eu"
 TEL = "+385 92 405 0600"
 KAL = "https://calendar.app.google/jx4eBT3Tn9bsoiSt9"
 TMB = "https://tmbingo.com"
+UPIT = f"mailto:{MAIL}?subject=Upit%20za%20projekt"
 
-NAV = [("/#usluge", "Usluge"), ("/#proces", "Proces"), ("/radovi/", "Radovi"), ("/tmbingo/", "TMBingo"), ("/#kontakt", "Kontakt")]
+NAV = [("/#usluge", "Usluge"), ("/radovi/", "Radovi"), ("/#studio", "Studio"), ("/tmbingo/", "TMBingo")]
 
 SCHEMA_ORG = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": "https://studio23k.eu/#studio",
-    "name": "Studio23k",
-    "slogan": "Kreiramo doživljaj",
+    "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studio23k.eu/#studio",
+    "name": "Studio23k", "slogan": "Kreiramo doživljaj",
     "description": "Kreativni i digitalni studio iz Zadra za veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video te kampanje. Paket za male firme je TMBingo by Studio23k.",
-    "url": "https://studio23k.eu/",
-    "logo": "https://studio23k.eu/assets/apple-touch-icon.png",
-    "image": "https://studio23k.eu/assets/og-image.jpg",
-    "email": MAIL,
-    "telephone": TEL,
-    "taxID": "13393375189",
+    "url": "https://studio23k.eu/", "logo": "https://studio23k.eu/assets/apple-touch-icon.png", "image": "https://studio23k.eu/assets/og-image.jpg",
+    "email": MAIL, "telephone": TEL, "taxID": "13393375189",
     "address": {"@type": "PostalAddress", "streetAddress": ADRESA, "postalCode": "23000", "addressLocality": "Zadar", "addressRegion": "Zadarska županija", "addressCountry": "HR"},
     "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}],
     "founder": {"@type": "Person", "name": "Tonći Morić", "jobTitle": "Dizajner i programer"},
@@ -32,9 +26,9 @@ SCHEMA_ORG = {
 }
 
 
-def head(title, desc, path, extra_schema=None):
+def head(title, desc, path, extra=None):
     url = "https://studio23k.eu" + path
-    schemas = [SCHEMA_ORG] + (extra_schema or [])
+    sc = [SCHEMA_ORG] + (extra or [])
     return f"""<!doctype html>
 <html lang="hr">
 <head>
@@ -42,7 +36,7 @@ def head(title, desc, path, extra_schema=None):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#f4efe4">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="hr_HR">
@@ -55,331 +49,295 @@ def head(title, desc, path, extra_schema=None):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css">
+<link rel="stylesheet" href="/assets/studio.css?v=2">
 <script type="application/ld+json">
-{json.dumps(schemas if len(schemas) > 1 else schemas[0], ensure_ascii=False, indent=1)}
+{json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
 </script>
 </head>
 <body>
+<div class="cur" aria-hidden="true"></div>
 """
 
 
-def menu():
+def nav(cur):
+    lis = "".join(f'<li><a href="{h}"{" class=\"tmb\"" if t == "TMBingo" else ""}{" aria-current=\"page\"" if h == cur else ""}>{t}</a></li>' for h, t in NAV)
     links = "".join(f'<a href="{h}"{" class=\"tmb\"" if t == "TMBingo" else ""}>{t}</a>' for h, t in NAV)
-    return f"""<div class="chip" id="chip"><a href="/#kontakt">Kontakt</a><button type="button" class="open-menu" aria-label="Otvori izbornik"><span><i></i><i></i></span></button></div>
-
+    return f"""<header class="nav">
+  <a class="logo" href="/" aria-label="Studio23k, naslovna">studio23<b>k</b></a>
+  <nav aria-label="Glavna navigacija"><ul>{lis}</ul></nav>
+  <a class="pill" href="/#kontakt">Javite se <span class="ar">→</span></a>
+  <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
+</header>
 <div class="menu" id="menu" aria-hidden="true">
-  <div class="grid"><span class="lbl c1">Studio23k</span><span class="lbl c3">Izbornik</span><button class="lbl close c11" type="button" id="closeMenu">Zatvori</button></div>
-  <nav class="grid" aria-label="Izbornik"><div class="links full">{links}</div></nav>
-  <div class="grid"><span class="lbl c1">{MAIL}</span><span class="lbl c3 dim">Paket za male firme: TMBingo by Studio23k</span></div>
+  <div class="row"><a class="logo" href="/">studio23<b>k</b></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
+  <nav class="links" aria-label="Izbornik">{links}<a href="/#kontakt">Kontakt</a></nav>
+  <div class="row tag"><span>{MAIL}</span><span class="dim">Zadar</span></div>
 </div>
 """
 
 
-def topbar(cur, ink=False):
-    lis = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{t}</a></li>' for h, t in NAV)
-    return f"""  <div class="top grid{' ink' if ink else ''}">
-    <a class="lbl c1 brand" href="/"><b>studio23k</b></a>
-    <span class="lbl c3">Kreativni i digitalni studio · Zadar</span>
-    <nav class="lbl c7" aria-label="Glavna navigacija"><ul>{lis}</ul></nav>
-    <button class="burger c11 open-menu" type="button" aria-label="Otvori izbornik"><i></i><i></i></button>
-  </div>
-"""
+def round_sticker(text, big, cls, rot=-12):
+    return f'<div class="stk round {cls}" style="rotate:{rot}deg" aria-hidden="true"><svg viewBox="0 0 128 128"><defs><path id="c{cls}" d="M64,64 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs><text><textPath href="#c{cls}">{text}</textPath></text></svg><b>{big}</b></div>'
+
+
+def marquee(words, cls="", href=None, n=6):
+    one = "".join(f"<span>{w}<i>✦</i></span>" for w in words)
+    inner = f'<div class="tr">{one * n}</div>'
+    if href:
+        return f'<a class="mq {cls}" href="{href}" aria-label="{words[0]}" data-cur="Klik">{inner}</a>'
+    return f'<div class="mq {cls}" aria-hidden="true">{inner}</div>'
 
 
 def footer():
-    return f"""<footer class="foot-wrap" id="kontakt">
-  <div class="ft grid">
-    <p class="lbl c1">Studio23k</p>
-    <p class="lbl c3">Obrt Studio23k<br>vl. Tonći Morić<br>OIB 13393375189<br>{ADRESA}, 23000 Zadar<br>© 2026 Studio23k</p>
-    <div class="c7w">
-      <p class="lbl dim">Novi projekt</p>
-      <a class="mail" href="mailto:{MAIL}?subject=Upit%20za%20projekt">{MAIL}</a>
-      <div class="acts">
-        <a class="btn" href="mailto:{MAIL}?subject=Upit%20za%20projekt">Pošaljite upit</a>
-        <a class="btn ghost" href="{KAL}" target="_blank" rel="noopener">Video poziv 30 min</a>
-      </div>
-    </div>
-    <dl class="lbl c3">
-      <div><dt>Telefon</dt><dd><a href="tel:+385924050600">{TEL}</a></dd></div>
-      <div><dt>Ponuda</dt><dd>Pisana, nakon prvog razgovora</dd></div>
-    </dl>
-    <dl class="lbl c7">
-      <div><dt>Za male firme</dt><dd><a class="g" href="/tmbingo/">TMBingo by Studio23k</a> · <a class="g" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></dd></div>
-      <div><dt>Vodi</dt><dd>Tonći Morić · 20 godina dizajna i programiranja</dd></div>
-    </dl>
-    <p class="giant" aria-hidden="true"><span>studio23<span class="a">k</span></span></p>
-    <div class="bottom lbl"><span>Kreiramo doživljaj.</span><span class="dim">Obrt nije u sustavu PDV-a</span><span class="links"><a href="/radovi/">Radovi</a><a href="/tmbingo/">TMBingo</a><a href="{TMB}/cjenik/">Cjenik</a><a href="{TMB}/privatnost.html">Privatnost</a><a href="{TMB}/uvjeti.html">Uvjeti</a></span></div>
+    return f"""<section class="cta" id="kontakt">
+  {round_sticker("javite se · javite se · javite se · ", "☕", "s9", 10)}
+  <h2 class="rv">Imate ideju?<br>Popijmo <span class="o">kavu.</span></h2>
+  <div class="row rv">
+    <a class="mail" href="{UPIT}" data-cur="Pišite">{MAIL}</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="pill o" href="{UPIT}">Pošaljite upit <span class="ar">→</span></a><a class="pill line" href="{KAL}" target="_blank" rel="noopener">Video poziv 30 min</a></div>
   </div>
+</section>
+<footer class="ft">
+  <div><span class="tag">Studio</span><p>Obrt Studio23k<br>vl. Tonći Morić<br>{ADRESA}<br>23000 Zadar</p></div>
+  <div><span class="tag">Kontakt</span><p><a href="mailto:{MAIL}">{MAIL}</a><br><a href="tel:+385924050600">{TEL}</a></p></div>
+  <div><span class="tag">Stranice</span><ul><li><a href="/#usluge">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
+  <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
+  <p class="big" aria-hidden="true">studio23<b>k</b></p>
+  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span><a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
 </footer>
 
+<div class="chat" id="chat">
+  <div class="win" role="dialog" aria-label="Poruka Studio23k">
+    <div class="top"><i></i><b>Studio23k</b><span class="dim">· Zadar</span></div>
+    <div class="msgs"><p class="msg">Bok! 👋</p><p class="msg">Imate projekt na umu ili vam treba nešto manje za firmu?</p></div>
+    <div class="opts"><a href="{UPIT}">Imam veći projekt</a><a class="g" href="/tmbingo/">Mala sam firma</a><a href="{KAL}" target="_blank" rel="noopener">Dogovorimo poziv</a></div>
+  </div>
+  <button class="btn" type="button" aria-label="Otvori poruke" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
+</div>
+
 <script src="/assets/js/lenis.min.js"></script>
-<script src="/assets/js/studio.js" defer></script>
+<script src="/assets/js/studio.js?v=2" defer></script>
 </body>
 </html>
 """
 
 
 RADOVI = [
-    ("antuntun", "Antuntun", "https://antuntun-zadar.com/", "Identitet · Web"),
-    ("frida", "Frida", "https://frida-zadar.hr/", "Web · upravljanje zgradama"),
-    ("focx", "Focx", "https://focx.store/", "Web trgovina"),
-    ("dalmatica", "Dalmatica Mobility", "https://dalmaticamobility.com/", "Web · selidbe"),
-    ("goveer", "Goveer", "https://goveer.com/", "Web trgovina"),
-    ("ldesign", "L-Design", "https://l-design.hr/en/", "Web · tapeciranje i nautika"),
-    ("protex", "Protex", "https://protexzadar.hr/", "Web · videonadzor"),
-    ("dizajnpro", "DizajnPro", "https://dizajnpro.net/", "Web trgovina"),
+    ("antuntun", "Antuntun", "https://antuntun-zadar.com/", ["Identitet", "Web"]),
+    ("frida", "Frida", "https://frida-zadar.hr/", ["Web", "Upravljanje zgradama"]),
+    ("focx", "Focx", "https://focx.store/", ["Web trgovina"]),
+    ("dalmatica", "Dalmatica Mobility", "https://dalmaticamobility.com/", ["Web", "Selidbe"]),
+    ("goveer", "Goveer", "https://goveer.com/", ["Web trgovina"]),
+    ("ldesign", "L-Design", "https://l-design.hr/en/", ["Web", "Nautika"]),
+    ("protex", "Protex", "https://protexzadar.hr/", ["Web", "Videonadzor"]),
+    ("dizajnpro", "DizajnPro", "https://dizajnpro.net/", ["Web trgovina"]),
 ]
-KLIJENTI = "Frida, Antuntun, Riva Rafting Centar, Zrmanja Adventures, Mićanovi Dvori, DizajnPro, LanaMar, ZadarSub, Goveer, Focx, Skroće, Malta, Lastavica, Protex, SolHome, L-Design, Dalmatica Mobility, Calimero Sport, Rildo, Marco Polo's, Manhatta."
+KLIJENTI = ["Frida", "Antuntun", "Riva Rafting Centar", "Zrmanja Adventures", "Mićanovi Dvori", "DizajnPro", "LanaMar", "ZadarSub", "Goveer", "Focx", "Skroće", "Malta", "Lastavica", "Protex", "SolHome", "L-Design", "Dalmatica Mobility", "Calimero Sport", "Rildo", "Marco Polo's", "Manhatta", "Zadar Region Guide", "Mile", "TST Group"]
 
 
-def case(r):
-    f, n, u, t = r
-    return f'<li><a href="{u}" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/{f}.jpg" alt="Web stranica {n} na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">{n}</span><span class="lbl">{t}</span></a></li>'
+def work_item(r):
+    f, n, u, tags = r
+    chips = "".join(f"<span>{t}</span>" for t in tags)
+    return f'<li class="rv"><a href="{u}" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/{f}.jpg" alt="Web stranica {n} na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>{n}</h3><span class="chips">{chips}</span></span></a></li>'
 
 
 USLUGE = [
-    ("Web platforme po mjeri", "Višejezični webovi, rezervacije, prijave i integracije s alatima koje već koristite. Sadržaj uređujete sami.", "Web"),
-    ("Web trgovine", "Katalog, košarica, kartično plaćanje, dostava i veza na skladište ili knjigovodstvo.", "E-commerce"),
-    ("Web aplikacije i sustavi", "CRM, portali za klijente, narudžbe i automatizacija posla koji se danas radi ručno.", "Sustavi"),
-    ("Brend identitet", "Ime, znak, boje, tipografija i pravila korištenja. Jedan sustav za web, tisak i mreže.", "Branding"),
-    ("Foto i video", "Proizvodi, prostori i događaji, snimljeni za web, kampanje i društvene mreže.", "Produkcija"),
-    ("Kampanje i tisak", "Jumbo plakati, katalozi, meniji i oglasi, pripremljeni za tisak i objavu.", "Kampanje"),
-    ("SEO i AI vidljivost", "Tehnički i lokalni SEO, strukturirani podaci i sadržaj koji Google i AI asistenti razumiju.", "Vidljivost"),
-    ("Održavanje i podrška", "Hosting, sigurnost, sigurnosne kopije i izmjene, s jednom osobom koja zna vaš projekt.", "Podrška"),
+    ("Web platforme po mjeri", "Višejezični webovi, rezervacije, prijave i integracije s alatima koje već koristite."),
+    ("Web trgovine", "Katalog, košarica, kartice, dostava i veza na skladište ili knjigovodstvo."),
+    ("Web aplikacije i sustavi", "CRM, portali za klijente, narudžbe i automatizacija posla koji se danas radi ručno."),
+    ("Brend identitet", "Ime, znak, boje i tipografija. Jedan sustav za web, tisak i mreže."),
+    ("Foto i video", "Proizvodi, prostori i događaji, snimljeni za web, kampanje i mreže."),
+    ("Kampanje i tisak", "Jumbo plakati, katalozi, meniji i oglasi, spremni za tisak i objavu."),
+    ("SEO i AI vidljivost", "Da vas nađu Google, karte i AI asistenti kad netko pita za ono što radite."),
+    ("Održavanje i podrška", "Hosting, sigurnost i izmjene, s jednom osobom koja zna vaš projekt."),
+]
+
+KARTICE = [
+    ("20+", "godina", "Dizajna i koda. Prvi web smo radili dok je internet još škripao na modemu."),
+    ("100+", "projekata", "Od lokalnih obrta do web trgovina i turističkih brendova."),
+    ("1", "osoba", "Od prve kave do lansiranja razgovarate s istim čovjekom. Bez prosljeđivanja."),
+    ("0", "predložaka", "Sve crtamo od nule, prvo u Figmi. Kod kreće tek kad kažete da je to to."),
+    ("7 Bf", "bura", "Radimo i kad puše. Rok je rok, makar se laptop držao s obje ruke."),
+    ("ZST", "Zadarsko standardno vrijeme", "Ponuda stiže brzo, ali tek nakon prve kave. Neke stvari se ne mijenjaju."),
 ]
 
 FAQ = [
-    ("Koja je razlika između Studio23k i TMBingo?", f"Studio23k radi veće projekte po mjeri, s ponudom za svaki projekt. <a href=\"/tmbingo/\">TMBingo by Studio23k</a> je paket za male firme, obrte i apartmane: web, dizajn i društvene mreže za jednu mjesečnu cijenu, bez obveze trajanja. Iza oba stoji isti tim i isti obrt."),
-    ("Koliko košta projekt?", f"Ovisi o opsegu. Nakon prvog razgovora dobivate pisanu ponudu s cijenom, rokom i popisom onoga što ulazi u cijenu. Ako vam treba manji web ili samo logo, cijene su javne na <a href=\"{TMB}/cjenik/\">TMBingo cjeniku</a>."),
-    ("Koliko traje izrada?", "Rok pišemo u ponudu prema opsegu projekta. Dizajn prvo dobivate na pregled u Figmi, pa tek kad ga odobrite kreće izrada."),
-    ("Radite li s firmama izvan Zadra?", "Da. Radimo s klijentima iz cijele Hrvatske i inozemstva. Sastanci su uživo u Zadru ili na video pozivu."),
+    ("Koja je razlika između Studio23k i TMBingo?", "Studio23k radi veće projekte po mjeri, s ponudom za svaki projekt. <a href=\"/tmbingo/\">TMBingo by Studio23k</a> je paket za male firme, obrte i apartmane: web, dizajn i društvene mreže za jednu mjesečnu cijenu, bez obveze trajanja. Iza oba stoji isti tim."),
+    ("Koliko košta projekt?", f"Ovisi o opsegu. Nakon prvog razgovora dobivate pisanu ponudu s cijenom, rokom i popisom onoga što ulazi u cijenu. Za manje stvari cijene su javne na <a href=\"{TMB}/cjenik/\">TMBingo cjeniku</a>."),
+    ("Koliko traje izrada?", "Rok pišemo u ponudu prema opsegu. Dizajn prvo vidite u Figmi, a izrada kreće tek kad ga odobrite."),
+    ("Radite li s firmama izvan Zadra?", "Da, s klijentima iz cijele Hrvatske i inozemstva. Kava je uživo u Zadru ili na video pozivu."),
     ("Tko radi na projektu?", "Svaki projekt vodi Tonći Morić, dizajner i programer s 20 godina iskustva. Za veće projekte uključujemo suradnike za fotografiju, video i sadržaj."),
 ]
 
 
 def faq_html(items):
-    out = []
-    for i, (q, a) in enumerate(items, 1):
-        out.append(f'<details><summary><span class="lbl">{i:02d}</span>{q}</summary><p>{a}</p></details>')
-    return "\n      ".join(out)
+    return "\n    ".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in items)
 
 
 def faq_schema(items):
-    import re
     return {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a)}} for q, a in items]}
 
 
 def index():
-    rows = "\n      ".join(f'<li><span class="n">{i:02d}</span><h3>{n}</h3><p>{d}</p><span class="lbl t">{t}</span></li>' for i, (n, d, t) in enumerate(USLUGE, 1))
-    cases = "\n      ".join(case(r) for r in RADOVI[:4])
-    return head("Studio23k · Web, brend i digitalni projekti po mjeri, Zadar",
-                "Studio23k iz Zadra radi veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video. Za male firme tu je paket TMBingo by Studio23k.",
-                "/", [faq_schema(FAQ)]) + menu() + f"""
-<header class="hero" id="vrh">
-  <div class="bg" id="heroBg" aria-hidden="true">
-    <img class="on" src="/assets/img/hero-3.jpg" alt="">
-    <img src="/assets/img/hero-1.jpg" alt="">
-    <img src="/assets/img/hero-4.jpg" alt="">
-    <img src="/assets/img/hero-2.jpg" alt="">
-  </div>
-{topbar('/')}  <div class="grid stage">
-    <h1>Kreiramo doživljaj<span class="a">.</span></h1>
-    <p class="side lbl">Web platforme, trgovine, aplikacije i brendovi po mjeri. Za tvrtke, turizam i brendove kojima treba više od predloška.</p>
-    <div class="foot"><span class="lbl">Studio iz Zadra · 20 godina iskustva</span><a class="lbl" href="#nacini">Mala firma? TMBingo paket →</a></div>
-  </div>
-</header>
-
+    svc = "\n      ".join(f'<li class="rv"><span class="tag">{i:02d}</span><h3>{n}</h3><p>{d}</p><span class="ic" aria-hidden="true">→</span></li>' for i, (n, d) in enumerate(USLUGE, 1))
+    cards = "\n      ".join(f'<article class="card"><div class="n tag"><span>{i:02d} / {len(KARTICE):02d}</span><span>✦</span></div><b>{big}<small>{small}</small></b><p>{p}</p></article>' for i, (big, small, p) in enumerate(KARTICE, 1))
+    work = "\n      ".join(work_item(r) for r in RADOVI[:4])
+    cloud = "".join(f"<span>{k}</span>" for k in KLIJENTI)
+    return head("Studio23k · Digitalni studio iz Zadra: web, brend, aplikacije",
+                "Studio23k iz Zadra radi veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video. Za male firme tu je TMBingo by Studio23k.",
+                "/", [faq_schema(FAQ)]) + nav("/") + f"""
 <main>
-  <section class="intro grid" id="studio">
-    <p class="lbl c1">Studio</p>
-    <p class="lbl c3">Tonći Morić<br>dizajn i programiranje</p>
-    <h2 class="large">Studio23k spaja strategiju, dizajn i programiranje u jednom timu. Od prvog razgovora do lansiranja imate <span class="a">jednu osobu</span> koja zna cijeli projekt, a svaki dizajn prvo vidite i odobrite u Figmi.</h2>
-    <div class="stats">
-      <div><b>20+</b><span class="lbl dim">godina iskustva</span></div>
-      <div><b>100+</b><span class="lbl dim">završenih projekata</span></div>
-      <div><b>2</b><span class="lbl dim">načina suradnje: projekt ili paket</span></div>
-      <div><b>1</b><span class="lbl dim">kontakt od prvog dana</span></div>
-    </div>
-  </section>
-
-  <div class="bleed" aria-hidden="true"><span class="lbl">Studio</span><video data-parallax data-lazyplay muted loop playsinline preload="none" poster="/assets/img/team-2.jpg"><source src="/assets/img/studio.mp4" type="video/mp4"></video></div>
-
-  <section class="svc grid" id="usluge">
-    <div class="head"><p class="lbl">Usluge</p><p class="lbl">Za projekte kojima treba rješenje po mjeri.</p></div>
-    <ol class="rows">
-      {rows}
-    </ol>
-  </section>
-
-  <div class="dark" id="proces">
-    <section class="proc grid">
-      <div class="head"><p class="lbl">Proces</p><p class="lbl dim">Četiri koraka, bez iznenađenja na kraju.</p></div>
-      <ol class="steps">
-        <li><span class="lbl dim">01</span><b>Upoznavanje</b><p>Razgovaramo o ciljevima, publici i opsegu. Dobivate pisanu ponudu s cijenom i rokom.</p></li>
-        <li><span class="lbl dim">02</span><b>Strategija i dizajn</b><p>Struktura, tekstovi i dizajn u Figmi. Ništa se ne programira dok ne odobrite.</p></li>
-        <li><span class="lbl dim">03</span><b>Izrada</b><p>Programiranje, sadržaj, testiranje na svim uređajima i priprema za Google.</p></li>
-        <li><span class="lbl dim">04</span><b>Lansiranje i podrška</b><p>Objava, mjerenje i održavanje. Ostajemo uz projekt i nakon lansiranja.</p></li>
-      </ol>
-    </section>
+<section class="hero" id="vrh">
+  <figure class="float f1" data-float="-0.12"><img src="/assets/radovi/antuntun.jpg" alt="" width="1200" height="900"></figure>
+  <figure class="float f2" data-float="-0.22"><img src="/assets/radovi/focx.jpg" alt="" width="1200" height="900"></figure>
+  <figure class="float f3" data-float="-0.06"><img src="/assets/radovi/frida.jpg" alt="" width="1200" height="900"></figure>
+  {round_sticker("iz zadra s ljubavlju · iz zadra s ljubavlju · ", "23k", "s1")}
+  <div class="stk tape s2" aria-hidden="true">Figma prije koda ✍️</div>
+  <h1><span class="l"><span>Kreiramo</span></span><span class="l"><span><em>doživljaj</em><span class="o">.</span></span></span></h1>
+  <div class="sub">
+    <p>Digitalni studio iz Zadra za projekte kojima ne treba predložak, nego netko tko će ih stvarno razumjeti.</p>
+    <div class="acts"><a class="pill o" href="#radovi">Pogledajte radove <span class="ar">↓</span></a><a class="pill line" href="/tmbingo/">Mala firma? TMBingo</a></div>
   </div>
+</section>
 
-  <section class="ways grid" id="nacini">
-    <div class="head"><p class="lbl">Dva načina suradnje</p><p class="lbl">Isti tim. Veliki projekt po mjeri ili mjesečni paket za male firme.</p></div>
-    <div class="pair">
-      <div class="way s23">
-        <span class="lbl">Studio23k</span>
-        <h3>Projekt po mjeri<small>Tvrtke, turizam, trgovine, brendovi</small></h3>
-        <ul>
-          <li>Web platforme, trgovine i aplikacije po mjeri</li>
-          <li>Brend identitet od nule</li>
-          <li>Foto, video i kampanje</li>
-          <li>Integracije, sustavi i automatizacija</li>
-          <li>Jedan voditelj projekta od početka do kraja</li>
-        </ul>
-        <div>
-          <p class="amt">Ponuda<small>po projektu, nakon prvog razgovora</small></p>
-          <p class="cta" style="margin-top:18px"><a class="btn light" href="mailto:{MAIL}?subject=Upit%20za%20projekt">Pošaljite upit</a><a class="btn ghost light" href="{KAL}" target="_blank" rel="noopener">Video poziv 30 min</a></p>
-        </div>
-      </div>
-      <div class="way tmb">
-        <span class="lbl tag-g">TMBingo by Studio23k</span>
-        <h3>Paket za male firme<small>Obrti, kafići, apartmani, lokalne firme</small></h3>
-        <ul>
-          <li>Web stranica od 299 € (landing page)</li>
-          <li>Logo, dizajn i tiskovine</li>
-          <li>Vođenje društvenih mreža</li>
-          <li>Jedna mjesečna cijena, bez obveze trajanja</li>
-        </ul>
-        <div>
-          <p class="amt">od 199 €<small>mjesečno · bazna cijena 199 € (31. 10. 2026.)</small></p>
-          <p class="cta" style="margin-top:18px"><a class="btn tmb" href="/tmbingo/">Više o paketu</a><a class="btn ghost" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
+{marquee(["Web platforme", "Web trgovine", "Aplikacije", "Brend identitet", "Foto i video", "SEO"], "o")}
 
-  <section class="work grid" id="radovi">
-    <div class="head"><p class="lbl">Radovi</p><p class="lbl">Izdvojeni projekti</p></div>
-    <ul class="cases">
-      {cases}
-    </ul>
-    <p class="lbl more"><a class="u" href="/radovi/">Svi radovi i klijenti →</a></p>
-  </section>
+<section class="stmt" id="studio">
+  <span class="tag rv">( Studio )</span>
+  <h2 class="rv">Spajamo strategiju, dizajn i kod u <span class="hl">jednom timu</span>. Projekte shvaćamo ozbiljno, a kavu još ozbiljnije.</h2>
+  <div class="ps rv">
+    <p>Studio23k vodi Tonći Morić, dizajner i programer s dvadeset godina iskustva. Za veće projekte okupljamo suradnike za fotografiju, video i sadržaj, ali vi uvijek razgovarate s istom osobom.</p>
+    <p>Svaki dizajn prvo vidite i odobrite u Figmi. Tek onda pišemo kod, testiramo na svim uređajima i pripremamo za Google. I ostajemo uz projekt nakon lansiranja.</p>
+  </div>
+</section>
 
-  <section class="faq grid" id="pitanja">
-    <p class="lbl">Česta pitanja</p>
-    <div class="qs">
-      {faq_html(FAQ)}
-    </div>
-  </section>
+<section class="deck">
+  <div class="hd"><h2 class="rv">Par stvari<br>o nama</h2><p class="rv">Povucite kartice. Brojke su stvarne, bura isto.</p></div>
+  <div class="cards" data-cur="Povuci">
+      {cards}
+  </div>
+</section>
+
+<section class="svc" id="usluge">
+  <div class="sec-h"><h2 class="rv">Što<br>radimo<span class="o">.</span></h2><p class="rv">Za tvrtke, turizam, trgovine i brendove kojima treba rješenje po mjeri.</p></div>
+  <ol class="svl">
+      {svc}
+  </ol>
+</section>
+
+<div class="reel rv"><figure><video data-lazyplay muted loop playsinline preload="none" poster="/assets/img/team-2.jpg"><source src="/assets/img/studio.mp4" type="video/mp4"></video><figcaption class="tag">Iza kulisa ✦ Zadar</figcaption></figure></div>
+
+<section class="work" id="radovi">
+  <div class="sec-h"><h2 class="rv">Izdvojeni<br>radovi<span class="o">.</span></h2><p class="rv">Klik vodi na stvarnu stranicu. Neka sami kažu kako rade.</p></div>
+  <ul class="grid2">
+      {work}
+  </ul>
+  <div class="more"><a class="pill" href="/radovi/">Svi radovi <span class="ar">→</span></a></div>
+</section>
+
+{marquee(["Radili smo s", "Radili smo s"], "s rev", n=4)}
+<section class="cl"><span class="tag" style="padding-top:60px">( Klijenti )</span><div class="cloud rv">{cloud}</div></section>
+
+<section class="ways" id="nacini">
+  <div class="way s23 rv">
+    <span class="tag">Studio23k</span>
+    <h3>Projekt<br>po mjeri</h3>
+    <ul><li>Web platforme, trgovine i aplikacije</li><li>Brend identitet od nule</li><li>Foto, video i kampanje</li><li>Integracije i automatizacija</li></ul>
+    <div><p class="pr">Ponuda<small>po projektu, nakon prve kave</small></p><div class="acts"><a class="pill o" href="{UPIT}">Pošaljite upit <span class="ar">→</span></a></div></div>
+  </div>
+  <div class="way tmb rv">
+    {round_sticker("za male firme · za male firme · ", "TMB", "s5", 12)}
+    <span class="tag">TMBingo by Studio23k</span>
+    <h3>Paket za<br>male firme</h3>
+    <ul><li>Web stranica od 299 € (landing page)</li><li>Logo, dizajn i tiskovine</li><li>Vođenje društvenih mreža</li><li>Bez obveze trajanja</li></ul>
+    <div><p class="pr">od 199 €<small>mjesečno · bazna cijena 199 € (31. 10. 2026.)</small></p><div class="acts"><a class="pill" href="/tmbingo/">Više o paketu <span class="ar">→</span></a><a class="pill line" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></div></div>
+  </div>
+</section>
+
+<section class="faq" id="pitanja">
+  <h2 class="rv">Pitanja<br>koja često<br>čujemo</h2>
+  <div class="rv">
+    {faq_html(FAQ)}
+  </div>
+</section>
 </main>
 
+{marquee(["Javite se", "Popijmo kavu"], "", href="#kontakt")}
 """ + footer()
 
 
 def radovi():
-    cases = "\n      ".join(case(r) for r in RADOVI)
+    work = "\n      ".join(work_item(r) for r in RADOVI)
+    cloud = "".join(f"<span>{k}</span>" for k in KLIJENTI)
     return head("Radovi · Studio23k, Zadar",
                 "Odabrani radovi Studio23k: web stranice, web trgovine i vizualni identiteti za tvrtke i turizam u Zadru i Hrvatskoj.",
-                "/radovi/") + menu() + topbar('/radovi/', ink=True) + f"""
+                "/radovi/") + nav("/radovi/") + f"""
 <main>
-  <section class="phead grid">
-    <h1>Radovi<span class="a">.</span></h1>
-    <p class="lead">Web stranice, trgovine i identiteti koje smo napravili za tvrtke, turizam i lokalne brendove. Klik vodi na stvarnu stranicu.</p>
-  </section>
-  <section class="work grid">
-    <ul class="cases">
-      {cases}
-    </ul>
-    <div class="clients">
-      <p class="lbl dim">Klijenti</p>
-      <p>{KLIJENTI}</p>
-    </div>
-    <ul class="projects">
-      <li><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener">Antuntun</a><span>Identitet · Web</span></li>
-      <li><a href="https://zdguide.com" target="_blank" rel="noopener">Zadar Region Guide</a><span>Identitet · Web</span></li>
-      <li>Mile<span>Identitet</span></li>
-      <li>TST Group<span>Identitet</span></li>
-    </ul>
-    <p class="lbl more"><a class="btn" href="mailto:{MAIL}?subject=Upit%20za%20projekt">Pošaljite upit za projekt</a></p>
-  </section>
+<section class="phead">
+  {round_sticker("klik vodi na stvarni web · ", "↗", "s6", 8)}
+  <h1>Radovi<span class="o">.</span></h1>
+  <p>Web stranice, trgovine i identiteti za tvrtke, turizam i lokalne brendove.</p>
+</section>
+<section class="work" style="padding-top:20px">
+  <ul class="grid2">
+      {work}
+  </ul>
+</section>
+{marquee(["Radili smo s", "Radili smo s"], "s rev", n=4)}
+<section class="cl"><span class="tag" style="padding-top:60px">( Klijenti i projekti )</span><div class="cloud rv">{cloud}</div></section>
 </main>
-
 """ + footer()
 
 
 PLANS = [
-    ("start", "Start", "199 €", "mjesečno", "Bazna cijena 199 € (31. 10. 2026.)", "Društvene mreže i održavanje weba", ["8 objava mjesečno", "Održavanje postojećeg weba", "Jedan zadatak u isto vrijeme"], False),
-    ("tmbingo", "TMBingo paket", "399 €", "mjesečno", "Bazna cijena 399 € (29. 10. 2026.)", "Web, dizajn i društvene mreže", ["Web, hosting i održavanje", "Logo, branding, tiskovine", "Zadaci redom, jedan po jedan"], True),
-    ("pro", "Pro", "749 €", "mjesečno", "Bazna cijena 749 € (31. 10. 2026.)", "Kad treba više i brže", ["Sve iz TMBingo paketa", "Dva zadatka u isto vrijeme", "Prednost i mjesečni plan"], False),
-    ("web", "Web za 14 dana", "1.490 €", "jednokratno", "Bazna cijena 1.490 € (31. 10. 2026.)", "Nova web stranica, bez pretplate", ["Gotovo za 14 dana", "Dizajn prvo u Figmi", "Plaća se jednom"], False),
+    ("start", "Start", "199 €", "mjesečno · bazna cijena 199 € (31. 10. 2026.)", ["8 objava mjesečno", "Održavanje postojećeg weba", "Jedan zadatak u isto vrijeme"], False),
+    ("tmbingo", "TMBingo paket", "399 €", "mjesečno · bazna cijena 399 € (29. 10. 2026.)", ["Web, hosting i održavanje", "Logo, branding, tiskovine", "Društvene mreže"], True),
+    ("pro", "Pro", "749 €", "mjesečno · bazna cijena 749 € (31. 10. 2026.)", ["Sve iz TMBingo paketa", "Dva zadatka u isto vrijeme", "Prednost i mjesečni plan"], False),
+    ("web", "Web za 14 dana", "1.490 €", "jednokratno · bazna cijena 1.490 € (31. 10. 2026.)", ["Nova web stranica", "Dizajn prvo u Figmi", "Plaća se jednom"], False),
 ]
-
 TMB_FAQ = [
-    ("Zašto TMBingo ima svoju stranicu?", "Zato što je to drukčiji način rada: gotovi paketi s javnim cijenama, narudžba online i pretplata bez obveze trajanja. Studio23k je za projekte po mjeri. Iza oba stoji isti tim i isti obrt Studio23k."),
-    ("Gdje se paket naručuje?", f"Na <a href=\"{TMB}/paket/\">tmbingo.com/paket</a>. Tamo su i svi detalji, kalkulator i cjenik s baznim cijenama."),
-    ("Mogu li krenuti s paketom pa prijeći na veći projekt?", "Možete. Kad firma naraste i treba joj trgovina, aplikacija ili novi brend, projekt preuzima Studio23k, s istim ljudima koji već znaju vaš posao."),
+    ("Zašto TMBingo ima svoju stranicu?", "Zato što je to drukčiji način rada: gotovi paketi s javnim cijenama, narudžba online i pretplata bez obveze trajanja. Iza njega stoji isti tim i isti obrt Studio23k."),
+    ("Gdje se paket naručuje?", f"Na <a href=\"{TMB}/paket/\">tmbingo.com/paket</a>. Tamo su svi detalji, kalkulator i cjenik s baznim cijenama."),
+    ("Mogu li krenuti s paketom pa prijeći na veći projekt?", "Naravno. Kad firma naraste i treba joj trgovina, aplikacija ili novi brend, projekt preuzima Studio23k, s istim ljudima koji već znaju vaš posao."),
 ]
 
 
 def tmbingo():
-    cards = []
-    for key, name, amt, per, bz, sub, lis, feat in PLANS:
-        li = "".join(f"<li>{x}</li>" for x in lis)
-        em = " <em>Najčešći izbor</em>" if feat else ""
-        href = f"{TMB}/paket/?p={key}"
-        cards.append(f'<a class="card{" featured" if feat else ""}" href="{href}" target="_blank" rel="noopener"><span class="lbl">{name}{em}</span><b class="amt">{amt}</b><small class="lbl dim">{per}</small><small class="lbl dim">{bz}</small><span>{sub}</span><ul>{li}</ul><span class="lbl go">Odaberi na tmbingo.com ↗</span></a>')
-    cards = "\n        ".join(cards)
+    plans = "\n  ".join(
+        f'<a class="plan{" feat" if feat else ""} rv" href="{TMB}/paket/?p={k}" target="_blank" rel="noopener" data-cur="Odaberi"><span class="tag">{n}{" ✦ najčešći" if feat else ""}</span><b class="amt">{a}</b><small>{s}</small><ul>{"".join(f"<li>{x}</li>" for x in lis)}</ul><span class="go">Odaberi na tmbingo.com ↗</span></a>'
+        for k, n, a, s, lis, feat in PLANS)
     return head("TMBingo by Studio23k · Paket za male firme",
                 "TMBingo by Studio23k: web, dizajn i društvene mreže za male firme, obrte i apartmane od 199 € mjesečno, bez obveze trajanja. Web stranica od 299 €.",
-                "/tmbingo/", [faq_schema(TMB_FAQ)]) + menu() + topbar('/tmbingo/', ink=True) + f"""
+                "/tmbingo/", [faq_schema(TMB_FAQ)]) + nav("/tmbingo/") + f"""
 <main>
-  <section class="phead grid">
-    <h1>TMBingo <span class="g">by Studio23k</span></h1>
-    <p class="lead">Kreativni tim u jednom paketu za male firme, obrte, kafiće i apartmane. Web, dizajn i društvene mreže za jednu mjesečnu cijenu, bez obveze trajanja. Iste ruke kao i za velike projekte, samo u paketu.</p>
-  </section>
-
-  <div class="dark">
-    <section class="tmb-plans grid">
-      <div class="head" style="margin-bottom:24px;padding-top:16px"><p class="lbl">Paketi</p><p class="lbl dim">Pauza ili otkaz bilo kada. Narudžba na tmbingo.com.</p></div>
-      <div class="cards">
-        {cards}
-      </div>
-      <p class="note">Web stranica na jednoj stranici (landing page) je od 299 €, bazna cijena od 299 € (25. 11. 2026.). Sve cijene i bazne cijene su u <a href="{TMB}/cjenik/">cjeniku na tmbingo.com</a>. Obrt nije u sustavu PDV-a.</p>
-    </section>
+<section class="phead">
+  {round_sticker("bez obveze trajanja · bez obveze · ", "199", "s7", -8)}
+  <h1>TMBingo<br><span class="g">by Studio23k</span></h1>
+  <p>Kreativni tim u jednom paketu za male firme, obrte, kafiće i apartmane. Iste ruke kao za velike projekte, samo u paketu i za mjesečnu cijenu.</p>
+</section>
+<section class="plans">
+  {plans}
+  <p class="note">Web na jednoj stranici (landing page) je od 299 €, bazna cijena od 299 € (25. 11. 2026.). Sve cijene i bazne cijene su u <a href="{TMB}/cjenik/">cjeniku na tmbingo.com</a>. Obrt nije u sustavu PDV-a.</p>
+</section>
+{marquee(["Mala firma", "Veliki dojam"], "o")}
+<section class="vs" style="padding-top:110px">
+  <div class="a rv"><h3>TMBingo</h3><dl><div><dt>Za koga</dt><dd>Male firme, obrti, kafići, apartmani</dd></div><div><dt>Cijena</dt><dd>Javna, od 199 € mjesečno ili od 299 € jednokratno</dd></div><div><dt>Narudžba</dt><dd>Online na tmbingo.com</dd></div><div><dt>Obveza</dt><dd>Bez obveze trajanja</dd></div></dl><p style="margin-top:24px"><a class="pill" href="{TMB}/paket/" target="_blank" rel="noopener">Odaberi paket ↗</a></p></div>
+  <div class="b rv"><h3>Studio23k</h3><dl><div><dt>Za koga</dt><dd>Tvrtke, turizam, trgovine, brendovi</dd></div><div><dt>Cijena</dt><dd>Ponuda po projektu</dd></div><div><dt>Narudžba</dt><dd>Razgovor, pa pisana ponuda</dd></div><div><dt>Obveza</dt><dd>Ugovor za projekt, održavanje po dogovoru</dd></div></dl><p style="margin-top:24px"><a class="pill o" href="{UPIT}">Upit za projekt →</a></p></div>
+</section>
+<section class="faq">
+  <h2 class="rv">Pitanja</h2>
+  <div class="rv">
+    {faq_html(TMB_FAQ)}
   </div>
-
-  <section class="compare grid">
-    <div class="head"><p class="lbl">Što odabrati</p><p class="lbl">Kratka usporedba</p></div>
-    <table class="cmp">
-      <thead><tr><th></th><th class="g">TMBingo by Studio23k</th><th class="a">Studio23k projekt</th></tr></thead>
-      <tbody>
-        <tr><th>Za koga</th><td data-k="TMBingo">Male firme, obrti, kafići, apartmani</td><td data-k="Studio23k">Tvrtke, turizam, trgovine, brendovi</td></tr>
-        <tr><th>Cijena</th><td data-k="TMBingo">Javna, od 199 € mjesečno ili od 299 € jednokratno</td><td data-k="Studio23k">Ponuda po projektu</td></tr>
-        <tr><th>Opseg</th><td data-k="TMBingo">Gotovi paketi i usluge s cjenika</td><td data-k="Studio23k">Po mjeri: platforme, trgovine, aplikacije, identitet</td></tr>
-        <tr><th>Narudžba</th><td data-k="TMBingo">Online na tmbingo.com</td><td data-k="Studio23k">Razgovor, pa pisana ponuda</td></tr>
-        <tr><th>Obveza</th><td data-k="TMBingo">Bez obveze trajanja</td><td data-k="Studio23k">Ugovor za projekt, održavanje po dogovoru</td></tr>
-      </tbody>
-    </table>
-    <p class="lbl more" style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn tmb" href="{TMB}/paket/" target="_blank" rel="noopener">Odaberi paket na tmbingo.com ↗</a><a class="btn ghost" href="mailto:{MAIL}?subject=Upit%20za%20projekt">Upit za veći projekt</a></p>
-  </section>
-
-  <section class="faq grid">
-    <p class="lbl">Pitanja</p>
-    <div class="qs">
-      {faq_html(TMB_FAQ)}
-    </div>
-  </section>
+</section>
 </main>
-
 """ + footer()
 
 
 def nf():
-    return head("Stranica nije pronađena · Studio23k", "Ova stranica ne postoji.", "/404.html") + menu() + topbar('', ink=True) + f"""
-<main><section class="phead grid"><h1>Ova stranica ne postoji<span class="a">.</span></h1><p class="lead">Možda je premještena. <a class="u" href="/">Natrag na naslovnu</a> ili <a class="u" href="/radovi/">pogledajte radove</a>.</p></section></main>
+    return head("Stranica nije pronađena · Studio23k", "Ova stranica ne postoji.", "/404.html") + nav("") + f"""
+<main><section class="phead"><h1>Ups<span class="o">.</span></h1><p>Ova stranica je otišla na kavu i nije se vratila. <a class="pill" href="/" style="margin-top:20px">Natrag na naslovnu →</a></p></section></main>
 """ + footer()
 
 
