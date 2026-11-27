@@ -24,10 +24,10 @@ def emo(t, cls=""):
 NAV = [("/usluge/", "Usluge"), ("/radovi/", "Radovi"), ("/#studio", "Studio"), ("/tmbingo/", "TMBingo")]
 
 SCHEMA_ORG = {
-    "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studio23k.eu/#studio",
+    "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://www.studio23k.eu/#studio",
     "name": "Studio23k", "slogan": "Mi prodajemo ideje. Usluge su samo alat.",
     "description": "Kreativni i digitalni studio iz Zadra za veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video te kampanje. Paket za male firme je TMBingo by Studio23k.",
-    "url": "https://studio23k.eu/", "logo": "https://studio23k.eu/assets/apple-touch-icon.png", "image": "https://studio23k.eu/assets/og-image.jpg",
+    "url": "https://www.studio23k.eu/", "logo": "https://www.studio23k.eu/assets/apple-touch-icon.png", "image": "https://www.studio23k.eu/assets/og-image.jpg",
     "email": MAIL, "telephone": TEL, "taxID": "13393375189",
     "address": {"@type": "PostalAddress", "streetAddress": ADRESA, "postalCode": "23000", "addressLocality": "Zadar", "addressRegion": "Zadarska županija", "addressCountry": "HR"},
     "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}],
@@ -38,7 +38,7 @@ SCHEMA_ORG = {
 
 
 def head(title, desc, path, extra=None, noindex=False):
-    url = "https://studio23k.eu" + path
+    url = "https://www.studio23k.eu" + path
     sc = [SCHEMA_ORG] + (extra or [])
     return f"""<!doctype html>
 <html lang="hr">
@@ -55,7 +55,7 @@ def head(title, desc, path, extra=None, noindex=False):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="https://studio23k.eu/assets/og-image.jpg">
+<meta property="og:image" content="https://www.studio23k.eu/assets/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -518,15 +518,15 @@ def recenzije_html(slug, rs=None):
 
 def crumbs(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": i, "name": n, "item": "https://studio23k.eu" + u} for i, (n, u) in enumerate(items, 1)]}
+        {"@type": "ListItem", "position": i, "name": n, "item": "https://www.studio23k.eu" + u} for i, (n, u) in enumerate(items, 1)]}
 
 
 def usluga(i, slug, name, short):
     d = USLUGE_DETALJI[slug]
     path = f"/usluge/{slug}/"
     svc_schema = {"@context": "https://schema.org", "@type": "Service", "name": name, "serviceType": name, "description": d["desc"],
-                  "url": "https://studio23k.eu" + path, "image": f"https://studio23k.eu/assets/usluge/{slug}.jpg",
-                  "provider": {"@id": "https://studio23k.eu/#studio"}, "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}]}
+                  "url": "https://www.studio23k.eu" + path, "image": f"https://www.studio23k.eu/assets/usluge/{slug}.jpg",
+                  "provider": {"@id": "https://www.studio23k.eu/#studio"}, "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}]}
     dob = "".join(f"<li>{emo(EMO[slug])}<span>{x}</span></li>" for x in d["dob"])
     rad = ""
     if d["radovi"]:
@@ -566,7 +566,7 @@ def usluga(i, slug, name, short):
 def usluge_index():
     li = "\n  ".join(f'<li class="rv"><a href="/usluge/{s}/" data-cur="Više"><span class="im"><img src="/assets/usluge/{s}.jpg" alt="" width="1600" height="1000" loading="lazy">{emo(EMO[s], "on")}</span><span class="tag">{i:02d}</span><h2>{n}</h2><p>{dsc}</p></a></li>' for i, (s, n, dsc) in enumerate(USLUGE, 1))
     lst = {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
-        {"@type": "ListItem", "position": i, "name": n, "url": f"https://studio23k.eu/usluge/{s}/"} for i, (s, n, _) in enumerate(USLUGE, 1)]}
+        {"@type": "ListItem", "position": i, "name": n, "url": f"https://www.studio23k.eu/usluge/{s}/"} for i, (s, n, _) in enumerate(USLUGE, 1)]}
     return head("Usluge · Studio23k, Zadar: web, trgovine, aplikacije, brend",
                 "Usluge Studio23k: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video, kampanje i tisak, SEO i AI vidljivost te održavanje.",
                 "/usluge/", [lst, crumbs([("Studio23k", "/"), ("Usluge", "/usluge/")])]) + nav("/usluge/") + f"""
@@ -606,7 +606,7 @@ def upit():
     <input type="hidden" name="access_key" value="{W3F_KEY}">
     <input type="hidden" name="subject" value="Novi upit sa studio23k.eu">
     <input type="hidden" name="from_name" value="Studio23k web">
-    <input type="hidden" name="redirect" value="https://studio23k.eu/upit/hvala/">
+    <input type="hidden" name="redirect" value="https://www.studio23k.eu/upit/hvala/">
     <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="two">
       <label class="f"><span>Ime i prezime *</span><input name="ime" required autocomplete="name"></label>
