@@ -4,7 +4,8 @@ import json, os, re, sys
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 ADRESA = "Jakova Gotovca 18"
-MAIL = "hello@studio23k.eu"
+MAIL = "tonci@studio23k.eu"
+W3F_KEY = "4082dd29-6008-4e96-a629-a279cee98721"  # Web3Forms (javni ključ, šalje upite na tonci@studio23k.eu)
 TEL = "+385 92 405 0600"
 TMB = "https://tmbingo.com"
 UPIT = f"mailto:{MAIL}?subject=Upit%20za%20projekt"
@@ -23,10 +24,10 @@ def emo(t, cls=""):
 NAV = [("/usluge/", "Usluge"), ("/radovi/", "Radovi"), ("/#studio", "Studio"), ("/tmbingo/", "TMBingo")]
 
 SCHEMA_ORG = {
-    "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studio23k.eu/#studio",
+    "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://www.studio23k.eu/#studio",
     "name": "Studio23k", "slogan": "Mi prodajemo ideje. Usluge su samo alat.",
     "description": "Kreativni i digitalni studio iz Zadra za veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video te kampanje. Paket za male firme je TMBingo by Studio23k.",
-    "url": "https://studio23k.eu/", "logo": "https://studio23k.eu/assets/apple-touch-icon.png", "image": "https://studio23k.eu/assets/og-image.jpg",
+    "url": "https://www.studio23k.eu/", "logo": "https://www.studio23k.eu/assets/apple-touch-icon.png", "image": "https://www.studio23k.eu/assets/og-image.jpg",
     "email": MAIL, "telephone": TEL, "taxID": "13393375189",
     "address": {"@type": "PostalAddress", "streetAddress": ADRESA, "postalCode": "23000", "addressLocality": "Zadar", "addressRegion": "Zadarska županija", "addressCountry": "HR"},
     "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}],
@@ -37,7 +38,7 @@ SCHEMA_ORG = {
 
 
 def head(title, desc, path, extra=None, noindex=False):
-    url = "https://studio23k.eu" + path
+    url = "https://www.studio23k.eu" + path
     sc = [SCHEMA_ORG] + (extra or [])
     return f"""<!doctype html>
 <html lang="hr">
@@ -54,12 +55,12 @@ def head(title, desc, path, extra=None, noindex=False):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="https://studio23k.eu/assets/og-image.jpg">
+<meta property="og:image" content="https://www.studio23k.eu/assets/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=9">
+<link rel="stylesheet" href="/assets/studio.css?v=10">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
@@ -517,15 +518,15 @@ def recenzije_html(slug, rs=None):
 
 def crumbs(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": i, "name": n, "item": "https://studio23k.eu" + u} for i, (n, u) in enumerate(items, 1)]}
+        {"@type": "ListItem", "position": i, "name": n, "item": "https://www.studio23k.eu" + u} for i, (n, u) in enumerate(items, 1)]}
 
 
 def usluga(i, slug, name, short):
     d = USLUGE_DETALJI[slug]
     path = f"/usluge/{slug}/"
     svc_schema = {"@context": "https://schema.org", "@type": "Service", "name": name, "serviceType": name, "description": d["desc"],
-                  "url": "https://studio23k.eu" + path, "image": f"https://studio23k.eu/assets/usluge/{slug}.jpg",
-                  "provider": {"@id": "https://studio23k.eu/#studio"}, "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}]}
+                  "url": "https://www.studio23k.eu" + path, "image": f"https://www.studio23k.eu/assets/usluge/{slug}.jpg",
+                  "provider": {"@id": "https://www.studio23k.eu/#studio"}, "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}]}
     dob = "".join(f"<li>{emo(EMO[slug])}<span>{x}</span></li>" for x in d["dob"])
     rad = ""
     if d["radovi"]:
@@ -565,7 +566,7 @@ def usluga(i, slug, name, short):
 def usluge_index():
     li = "\n  ".join(f'<li class="rv"><a href="/usluge/{s}/" data-cur="Više"><span class="im"><img src="/assets/usluge/{s}.jpg" alt="" width="1600" height="1000" loading="lazy">{emo(EMO[s], "on")}</span><span class="tag">{i:02d}</span><h2>{n}</h2><p>{dsc}</p></a></li>' for i, (s, n, dsc) in enumerate(USLUGE, 1))
     lst = {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
-        {"@type": "ListItem", "position": i, "name": n, "url": f"https://studio23k.eu/usluge/{s}/"} for i, (s, n, _) in enumerate(USLUGE, 1)]}
+        {"@type": "ListItem", "position": i, "name": n, "url": f"https://www.studio23k.eu/usluge/{s}/"} for i, (s, n, _) in enumerate(USLUGE, 1)]}
     return head("Usluge · Studio23k, Zadar: web, trgovine, aplikacije, brend",
                 "Usluge Studio23k: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video, kampanje i tisak, SEO i AI vidljivost te održavanje.",
                 "/usluge/", [lst, crumbs([("Studio23k", "/"), ("Usluge", "/usluge/")])]) + nav("/usluge/") + f"""
@@ -588,7 +589,7 @@ ROK = ["Što prije", "U idućih 1 do 3 mjeseca", "Nije hitno"]
 
 
 def upit():
-    chk = "".join(f'<label class="chip"><input type="checkbox" name="usluge" value="{n}" data-slug="{s}"><span>{n}</span></label>' for s, n, _ in USLUGE)
+    chk = "".join(f'<label class="chip"><input type="checkbox" name="Usluga: {n}" value="da" data-slug="{s}"><span>{n}</span></label>' for s, n, _ in USLUGE)
     bud = "".join(f'<label class="chip"><input type="radio" name="budzet" value="{b}"><span>{b}</span></label>' for b in BUDZET)
     rok = "".join(f'<label class="chip"><input type="radio" name="rok" value="{b}"><span>{b}</span></label>' for b in ROK)
     return head("Opišite projekt · Studio23k, Zadar",
@@ -601,9 +602,12 @@ def upit():
   <p>Svojim riječima, koliko god kratko ili dugo želite. Odgovaramo pisano, a kad imamo dovoljno podataka, šaljemo pisanu ponudu s cijenom i rokom.</p>
 </section>
 <section class="upit">
-  <form class="fm rv" name="upit" method="POST" action="/upit/hvala/" data-netlify="true" netlify-honeypot="bot">
-    <input type="hidden" name="form-name" value="upit">
-    <p hidden><label>Ne ispunjavajte: <input name="bot"></label></p>
+  <form class="fm rv" name="upit" method="POST" action="https://api.web3forms.com/submit">
+    <input type="hidden" name="access_key" value="{W3F_KEY}">
+    <input type="hidden" name="subject" value="Novi upit sa studio23k.eu">
+    <input type="hidden" name="from_name" value="Studio23k web">
+    <input type="hidden" name="redirect" value="https://www.studio23k.eu/upit/hvala/">
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="two">
       <label class="f"><span>Ime i prezime *</span><input name="ime" required autocomplete="name"></label>
       <label class="f"><span>E-mail *</span><input type="email" name="email" required autocomplete="email"></label>

@@ -1,0 +1,11 @@
+# Cloudflare Pages: stare WordPress adrese na nove stranice (/usluge/ i podstranice postoje, pa ih ne preusmjeravamo)
+/studio /#studio 301
+/studio/* /#studio 301
+/kontakt /upit/ 301
+/kontakt/* /upit/ 301
+/novosti / 301
+/novosti/* / 301
+/hello-world / 301
+/hello-world/* / 301
+/cjenik https://tmbingo.com/cjenik/ 301
+/cjenik/* https://tmbingo.com/cjenik/ 301
