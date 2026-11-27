@@ -24,7 +24,7 @@ NAV = [("/usluge/", "Usluge"), ("/radovi/", "Radovi"), ("/#studio", "Studio"), (
 
 SCHEMA_ORG = {
     "@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studio23k.eu/#studio",
-    "name": "Studio23k", "slogan": "Kreiramo doživljaj",
+    "name": "Studio23k", "slogan": "Mi prodajemo ideje. Usluge su samo alat.",
     "description": "Kreativni i digitalni studio iz Zadra za veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video te kampanje. Paket za male firme je TMBingo by Studio23k.",
     "url": "https://studio23k.eu/", "logo": "https://studio23k.eu/assets/apple-touch-icon.png", "image": "https://studio23k.eu/assets/og-image.jpg",
     "email": MAIL, "telephone": TEL, "taxID": "13393375189",
@@ -59,7 +59,7 @@ def head(title, desc, path, extra=None, noindex=False):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=7">
+<link rel="stylesheet" href="/assets/studio.css?v=8">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
@@ -215,9 +215,10 @@ def index():
   <figure class="float f3" data-float="-0.06"><img src="/assets/radovi/frida.jpg" alt="" width="1200" height="900"></figure>
   {round_sticker("iz zadra s ljubavlju · iz zadra s ljubavlju · ", "23k", "s1")}
   <div class="stk tape s2" aria-hidden="true">Figma prije koda :P</div>
-  <h1><span class="l"><span>Kreiramo</span></span><span class="l"><span><em>doživljaj</em><span class="o">.</span></span></span></h1>
+  <p class="kick rv">Digitalni koncept partner za <i>vizionare</i> :)</p>
+  <h1><span class="l"><span>Mi prodajemo <em>ideje</em><span class="o">.</span></span></span><span class="l"><span class="b2">Usluge su samo alat.</span></span></h1>
   <div class="sub">
-    <p>Digitalni studio iz Zadra za projekte kojima ne treba predložak, nego netko tko će ih stvarno razumjeti.</p>
+    <p>Dajemo vam strategiju, doživljaj i hrabrost za rast. Web, brend, aplikacije, foto i video su samo alati kojima vašu ideju pretvaramo u nešto stvarno.</p>
     <div class="acts"><a class="pill o" href="#radovi">Pogledajte radove <span class="ar">↓</span></a><a class="pill line" href="/tmbingo/">Mala firma? TMBingo</a></div>
   </div>
 </section>
