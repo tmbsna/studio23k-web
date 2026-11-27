@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Radovi · Studio23k, Zadar</title>
 <meta name="description" content="Odabrani radovi Studio23k: web stranice, web trgovine i vizualni identiteti za tvrtke i turizam u Zadru i Hrvatskoj.">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#f4efe4">
 <link rel="canonical" href="https://studio23k.eu/radovi/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="hr_HR">
@@ -18,14 +18,15 @@
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css">
+<link rel="stylesheet" href="/assets/studio.css?v=9">
+<script>(function(){var d=document.documentElement;try{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}catch(e){}})();</script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "ProfessionalService",
  "@id": "https://studio23k.eu/#studio",
  "name": "Studio23k",
- "slogan": "Kreiramo doživljaj",
+ "slogan": "Mi prodajemo ideje. Usluge su samo alat.",
  "description": "Kreativni i digitalni studio iz Zadra za veće projekte: web platforme i trgovine po mjeri, web aplikacije, brend identitet, foto i video te kampanje. Paket za male firme je TMBingo by Studio23k.",
  "url": "https://studio23k.eu/",
  "logo": "https://studio23k.eu/assets/apple-touch-icon.png",
@@ -77,76 +78,78 @@
 </script>
 </head>
 <body>
-<div class="chip" id="chip"><a href="/#kontakt">Kontakt</a><button type="button" class="open-menu" aria-label="Otvori izbornik"><span><i></i><i></i></span></button></div>
-
-<div class="menu" id="menu" aria-hidden="true">
-  <div class="grid"><span class="lbl c1">Studio23k</span><span class="lbl c3">Izbornik</span><button class="lbl close c11" type="button" id="closeMenu">Zatvori</button></div>
-  <nav class="grid" aria-label="Izbornik"><div class="links full"><a href="/#usluge">Usluge</a><a href="/#proces">Proces</a><a href="/radovi/">Radovi</a><a href="/tmbingo/" class="tmb">TMBingo</a><a href="/#kontakt">Kontakt</a></div></nav>
-  <div class="grid"><span class="lbl c1">hello@studio23k.eu</span><span class="lbl c3 dim">Paket za male firme: TMBingo by Studio23k</span></div>
-</div>
-  <div class="top grid ink">
-    <a class="lbl c1 brand" href="/"><b>studio23k</b></a>
-    <span class="lbl c3">Kreativni i digitalni studio · Zadar</span>
-    <nav class="lbl c7" aria-label="Glavna navigacija"><ul><li><a href="/#usluge">Usluge</a></li><li><a href="/#proces">Proces</a></li><li><a href="/radovi/" aria-current="page">Radovi</a></li><li><a href="/tmbingo/">TMBingo</a></li><li><a href="/#kontakt">Kontakt</a></li></ul></nav>
-    <button class="burger c11 open-menu" type="button" aria-label="Otvori izbornik"><i></i><i></i></button>
+<div class="pre" id="pre" aria-hidden="true"><i></i><b><span class="lg"></span></b><i></i></div>
+<div class="cur" aria-hidden="true"></div>
+<header class="nav">
+  <a class="logo" href="/" aria-label="Studio23k, naslovna"><span class="lg"></span></a>
+  <nav aria-label="Glavna navigacija"><ul><li><a href="/usluge/">Usluge</a></li><li><a href="/radovi/" aria-current="page">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a href="/tmbingo/" class="tmb">TMBingo</a></li></ul></nav>
+  <div class="end">
+    <button class="theme" type="button" id="theme" aria-label="Svijetla ili tamna tema" title="Svijetla / tamna tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
+    <a class="pill" href="/upit/">Opišite projekt <span class="ar">→</span></a>
+    <button class="burger open-menu" type="button" aria-label="Otvori izbornik"><span><i></i><i></i></span></button>
   </div>
+</header>
+<div class="menu" id="menu" aria-hidden="true">
+  <div class="row"><a class="logo" href="/" aria-label="Studio23k, naslovna"><span class="lg"></span></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
+  <nav class="links" aria-label="Izbornik"><a href="/usluge/">Usluge</a><a href="/radovi/">Radovi</a><a href="/#studio">Studio</a><a href="/tmbingo/" class="tmb">TMBingo</a><a href="/upit/">Upit</a></nav>
+  <div class="row tag"><span>hello@studio23k.eu</span><span class="dim">Zadar</span></div>
+</div>
 
 <main>
-  <section class="phead grid">
-    <h1>Radovi<span class="a">.</span></h1>
-    <p class="lead">Web stranice, trgovine i identiteti koje smo napravili za tvrtke, turizam i lokalne brendove. Klik vodi na stvarnu stranicu.</p>
-  </section>
-  <section class="work grid">
-    <ul class="cases">
-      <li><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/antuntun.jpg" alt="Web stranica Antuntun na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Antuntun</span><span class="lbl">Identitet · Web</span></a></li>
-      <li><a href="https://frida-zadar.hr/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/frida.jpg" alt="Web stranica Frida na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Frida</span><span class="lbl">Web · upravljanje zgradama</span></a></li>
-      <li><a href="https://focx.store/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/focx.jpg" alt="Web stranica Focx na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Focx</span><span class="lbl">Web trgovina</span></a></li>
-      <li><a href="https://dalmaticamobility.com/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/dalmatica.jpg" alt="Web stranica Dalmatica Mobility na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Dalmatica Mobility</span><span class="lbl">Web · selidbe</span></a></li>
-      <li><a href="https://goveer.com/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/goveer.jpg" alt="Web stranica Goveer na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Goveer</span><span class="lbl">Web trgovina</span></a></li>
-      <li><a href="https://l-design.hr/en/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/ldesign.jpg" alt="Web stranica L-Design na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">L-Design</span><span class="lbl">Web · tapeciranje i nautika</span></a></li>
-      <li><a href="https://protexzadar.hr/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/protex.jpg" alt="Web stranica Protex na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">Protex</span><span class="lbl">Web · videonadzor</span></a></li>
-      <li><a href="https://dizajnpro.net/" target="_blank" rel="noopener"><span class="case-img"><img src="/assets/radovi/dizajnpro.jpg" alt="Web stranica DizajnPro na laptopu i mobitelu" width="1200" height="900" loading="lazy"></span><span class="case-t">DizajnPro</span><span class="lbl">Web trgovina</span></a></li>
-    </ul>
-    <div class="clients">
-      <p class="lbl dim">Klijenti</p>
-      <p>Frida, Antuntun, Riva Rafting Centar, Zrmanja Adventures, Mićanovi Dvori, DizajnPro, LanaMar, ZadarSub, Goveer, Focx, Skroće, Malta, Lastavica, Protex, SolHome, L-Design, Dalmatica Mobility, Calimero Sport, Rildo, Marco Polo's, Manhatta.</p>
-    </div>
-    <ul class="projects">
-      <li><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener">Antuntun</a><span>Identitet · Web</span></li>
-      <li><a href="https://zdguide.com" target="_blank" rel="noopener">Zadar Region Guide</a><span>Identitet · Web</span></li>
-      <li>Mile<span>Identitet</span></li>
-      <li>TST Group<span>Identitet</span></li>
-    </ul>
-    <p class="lbl more"><a class="btn" href="mailto:hello@studio23k.eu?subject=Upit%20za%20projekt">Pošaljite upit za projekt</a></p>
-  </section>
-</main>
-
-<footer class="foot-wrap" id="kontakt">
-  <div class="ft grid">
-    <p class="lbl c1">Studio23k</p>
-    <p class="lbl c3">Obrt Studio23k<br>vl. Tonći Morić<br>OIB 13393375189<br>Jakova Gotovca 18, 23000 Zadar<br>© 2026 Studio23k</p>
-    <div class="c7w">
-      <p class="lbl dim">Novi projekt</p>
-      <a class="mail" href="mailto:hello@studio23k.eu?subject=Upit%20za%20projekt">hello@studio23k.eu</a>
-      <div class="acts">
-        <a class="btn" href="mailto:hello@studio23k.eu?subject=Upit%20za%20projekt">Pošaljite upit</a>
-        <a class="btn ghost" href="https://calendar.app.google/jx4eBT3Tn9bsoiSt9" target="_blank" rel="noopener">Video poziv 30 min</a>
-      </div>
-    </div>
-    <dl class="lbl c3">
-      <div><dt>Telefon</dt><dd><a href="tel:+385924050600">+385 92 405 0600</a></dd></div>
-      <div><dt>Ponuda</dt><dd>Pisana, nakon prvog razgovora</dd></div>
-    </dl>
-    <dl class="lbl c7">
-      <div><dt>Za male firme</dt><dd><a class="g" href="/tmbingo/">TMBingo by Studio23k</a> · <a class="g" href="https://tmbingo.com/" target="_blank" rel="noopener">tmbingo.com ↗</a></dd></div>
-      <div><dt>Vodi</dt><dd>Tonći Morić · 20 godina dizajna i programiranja</dd></div>
-    </dl>
-    <p class="giant" aria-hidden="true"><span>studio23<span class="a">k</span></span></p>
-    <div class="bottom lbl"><span>Kreiramo doživljaj.</span><span class="dim">Obrt nije u sustavu PDV-a</span><span class="links"><a href="/radovi/">Radovi</a><a href="/tmbingo/">TMBingo</a><a href="https://tmbingo.com/cjenik/">Cjenik</a><a href="https://tmbingo.com/privatnost.html">Privatnost</a><a href="https://tmbingo.com/uvjeti.html">Uvjeti</a></span></div>
+<section class="phead">
+  <div class="stk round s6" style="rotate:8deg" aria-hidden="true"><svg viewBox="0 0 128 128"><defs><path id="cs6" d="M64,64 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs><text><textPath href="#cs6" textLength="301" lengthAdjust="spacing">klik vodi na stvarni web · </textPath></text></svg><b>↗</b></div>
+  <h1>Radovi<span class="o">.</span></h1>
+  <p>Web stranice, trgovine i identiteti za tvrtke, turizam i lokalne brendove.</p>
+</section>
+<section class="work" style="padding-top:20px">
+  <div class="filt" role="group" aria-label="Filtriraj radove">
+    <button type="button" data-f="" aria-pressed="true">Sve<span>8</span></button>
+    <button type="button" data-f="web" aria-pressed="false">Web stranice<span>5</span></button>
+    <button type="button" data-f="trgovina" aria-pressed="false">Web trgovine<span>3</span></button>
+    <button type="button" data-f="identitet" aria-pressed="false">Identitet<span>1</span></button>
   </div>
+  <ul class="grid2" id="radoviGrid">
+      <li class="rv" data-cat="identitet web"><a href="https://antuntun-zadar.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/antuntun.jpg" alt="Web stranica Antuntun na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Antuntun</h3><span class="chips"><span>Identitet</span><span>Web</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://frida-zadar.hr/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/frida.jpg" alt="Web stranica Frida na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Frida</h3><span class="chips"><span>Web</span><span>Upravljanje zgradama</span></span></span></a></li>
+      <li class="rv" data-cat="trgovina"><a href="https://focx.store/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/focx.jpg" alt="Web stranica Focx na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Focx</h3><span class="chips"><span>Web trgovina</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://dalmaticamobility.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/dalmatica.jpg" alt="Web stranica Dalmatica Mobility na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Dalmatica Mobility</h3><span class="chips"><span>Web</span><span>Selidbe</span></span></span></a></li>
+      <li class="rv" data-cat="trgovina"><a href="https://goveer.com/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/goveer.jpg" alt="Web stranica Goveer na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Goveer</h3><span class="chips"><span>Web trgovina</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://l-design.hr/en/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/ldesign.jpg" alt="Web stranica L-Design na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>L-Design</h3><span class="chips"><span>Web</span><span>Nautika</span></span></span></a></li>
+      <li class="rv" data-cat="web"><a href="https://protexzadar.hr/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/protex.jpg" alt="Web stranica Protex na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>Protex</h3><span class="chips"><span>Web</span><span>Videonadzor</span></span></span></a></li>
+      <li class="rv" data-cat="trgovina"><a href="https://dizajnpro.net/" target="_blank" rel="noopener" data-cur="Pogledaj"><span class="thumb"><img src="/assets/radovi/dizajnpro.jpg" alt="Web stranica DizajnPro na laptopu i mobitelu" width="1200" height="900" loading="lazy"><span class="go">↗</span></span><span class="cap"><h3>DizajnPro</h3><span class="chips"><span>Web trgovina</span></span></span></a></li>
+  </ul>
+</section>
+<div class="mq s rev" aria-hidden="true"><div class="tr"><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span><span>Radili smo s<i>✦</i></span></div></div>
+<section class="cl"><span class="tag" style="padding-top:60px">( Klijenti i projekti )</span><div class="cloud rv"><span>Frida</span><span>Antuntun</span><span>Riva Rafting Centar</span><span>Zrmanja Adventures</span><span>Mićanovi Dvori</span><span>DizajnPro</span><span>LanaMar</span><span>ZadarSub</span><span>Goveer</span><span>Focx</span><span>Skroće</span><span>Malta</span><span>Lastavica</span><span>Protex</span><span>SolHome</span><span>L-Design</span><span>Dalmatica Mobility</span><span>Calimero Sport</span><span>Rildo</span><span>Marco Polo's</span><span>Manhatta</span><span>Zadar Region Guide</span><span>Mile</span><span>TST Group</span></div></section>
+</main>
+<section class="cta" id="kontakt">
+  <div class="stk round s9" style="rotate:10deg" aria-hidden="true"><svg viewBox="0 0 128 128"><defs><path id="cs9" d="M64,64 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs><text><textPath href="#cs9" textLength="301" lengthAdjust="spacing">bez sastanaka · bez sastanaka · </textPath></text></svg><b>✍</b></div>
+  <h2 class="rv">Imate ideju?<br>Napišite <span class="o">je ;)</span></h2>
+  <p class="lead rv">Bez kave, poziva i sastanaka. Opišite projekt svojim riječima, a pisanu ponudu dobivate na mail.</p>
+  <div class="row rv">
+    <a class="mail" href="mailto:hello@studio23k.eu?subject=Upit%20za%20projekt" data-cur="Pišite">hello@studio23k.eu</a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="pill o" href="/upit/">Opišite projekt <span class="ar">→</span></a></div>
+  </div>
+</section>
+<footer class="ft">
+  <div><span class="tag">Studio</span><p>Obrt Studio23k<br>vl. Tonći Morić<br>Jakova Gotovca 18<br>23000 Zadar</p></div>
+  <div><span class="tag">Kontakt</span><p><a href="mailto:hello@studio23k.eu">hello@studio23k.eu</a><br><a href="/upit/">Obrazac za upit</a></p></div>
+  <div><span class="tag">Stranice</span><ul><li><a href="/usluge/">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
+  <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="https://tmbingo.com/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
+  <p class="big" aria-hidden="true"><span class="lg"></span></p>
+  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno :| <a href="https://tmbingo.com/privatnost.html">Privatnost</a> · <a href="https://tmbingo.com/uvjeti.html">Uvjeti</a> · <a href="https://tmbingo.com/cjenik/">Cjenik</a></span></div>
 </footer>
 
+<div class="chat" id="chat">
+  <div class="win" role="dialog" aria-label="Poruka Studio23k">
+    <div class="top"><i></i><b>Studio23k</b><span class="dim">· Zadar</span></div>
+    <div class="msgs"><p class="msg">Bok! :)</p><p class="msg">Imate projekt na umu ili vam treba nešto manje za firmu? Napišite, odgovaramo pisano.</p></div>
+    <div class="opts"><a href="/upit/">Opisat ću projekt</a><a class="g" href="/tmbingo/">Mala sam firma</a><a href="mailto:hello@studio23k.eu?subject=Upit%20za%20projekt">Pišem mail</a></div>
+  </div>
+  <button class="btn" type="button" aria-label="Otvori poruke" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
+</div>
+
 <script src="/assets/js/lenis.min.js"></script>
-<script src="/assets/js/studio.js" defer></script>
+<script src="/assets/js/studio.js?v=5" defer></script>
 </body>
 </html>
