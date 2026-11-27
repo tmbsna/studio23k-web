@@ -59,7 +59,7 @@ def head(title, desc, path, extra=None, noindex=False):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=8">
+<link rel="stylesheet" href="/assets/studio.css?v=9">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
@@ -92,7 +92,7 @@ def nav(cur):
 
 
 def round_sticker(text, big, cls, rot=-12):
-    return f'<div class="stk round {cls}" style="rotate:{rot}deg" aria-hidden="true"><svg viewBox="0 0 128 128"><defs><path id="c{cls}" d="M64,64 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs><text><textPath href="#c{cls}">{text}</textPath></text></svg><b>{big}</b></div>'
+    return f'<div class="stk round {cls}" style="rotate:{rot}deg" aria-hidden="true"><svg viewBox="0 0 128 128"><defs><path id="c{cls}" d="M64,64 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs><text><textPath href="#c{cls}" textLength="301" lengthAdjust="spacing">{text}</textPath></text></svg><b>{big}</b></div>'
 
 
 def marquee(words, cls="", href=None, n=6):

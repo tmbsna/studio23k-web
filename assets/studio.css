@@ -441,3 +441,12 @@ html.no-pre .pre { display: none; }
 .hero h1 .b2 { letter-spacing: 0; }
 @media (max-width: 700px) { .hero .s1 { display: none; } }
 .hero h1 .l:first-child { margin-bottom: 0; }
+/* Ispravci heroja: puni tekst, čist zeleni okvir, ravnomjeran tekst na naljepnici */
+.stk.round svg text { letter-spacing: 0; }
+.hero h1 .b2 { color: var(--fg); -webkit-text-stroke: 0; }
+.hero h1 .l { overflow: visible; padding-bottom: 0; margin-bottom: 0; }
+.hero h1 .l > span, .hero h1 .b2 { transform: none; opacity: 0; animation: hup .9s cubic-bezier(.2,.8,.2,1) forwards; }
+.hero h1 .l:nth-child(2) > span { animation-delay: .12s; }
+@keyframes hup { from { opacity: 0; transform: translateY(.35em); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero h1 .l > span, .hero h1 .b2 { animation: none; opacity: 1; transform: none; } }
+.hero h1 em { padding: .02em .14em .16em; line-height: .9; vertical-align: baseline; }
