@@ -8,9 +8,9 @@ const B = 'http://localhost:8768';
 
 const base = `<link rel="stylesheet" href="${B}/assets/fonts/fonts.css"><style>
 *{box-sizing:border-box;margin:0}body{width:1600px;height:1000px;overflow:hidden;position:relative;font-family:Manrope;color:#0d1512}
-.syne{font-family:Syne;font-weight:800;letter-spacing:-.06em}
+.syne{font-family:Manrope;font-weight:800;letter-spacing:-.04em}
 .card{position:absolute;border-radius:36px;box-shadow:0 40px 80px rgba(13,21,18,.22);overflow:hidden;background:#fbf8f2}
-.stk{position:absolute;display:grid;place-items:center;text-align:center;font:800 40px/1 Syne;letter-spacing:-.05em}
+.stk{position:absolute;display:grid;place-items:center;text-align:center;font:800 40px/1 Manrope;letter-spacing:-.03em}
 .round{border-radius:50%}
 .pill{position:absolute;border-radius:999px;padding:18px 30px;font:700 28px/1 Manrope}
 .bar{display:flex;gap:10px;padding:18px 22px;background:#efe9dc}.bar i{width:16px;height:16px;border-radius:50%;background:#d6cfbf}
@@ -46,11 +46,11 @@ const S = {
     <div class="pill" style="right:90px;top:60px;background:#ff5a1f;rotate:6deg">Automatski ⚡</div>
     <div class="stk round" style="left:70px;bottom:50px;width:190px;height:190px;background:#ffb3c7;rotate:-10deg;font-size:30px">manje<br>ručnog<br>posla</div></body>`,
   'brend-identitet': `<body style="background:#f4efe4">
-    <div class="card" style="left:120px;top:120px;width:640px;height:640px;background:#0f3b2e;display:grid;place-items:center;rotate:-4deg"><span class="syne" style="font-size:230px;color:#f4efe4">2<span style="color:#ff5a1f">3</span>k</span></div>
+    <div class="card" style="left:120px;top:120px;width:640px;height:640px;background:#0f3b2e;display:grid;place-items:center;rotate:-4deg"><img src="${B}/assets/logo-icon.png" style="height:440px"></div>
     <div style="position:absolute;left:840px;top:130px;display:grid;grid-template-columns:repeat(2,300px);gap:24px">
       ${[['#0f3b2e','#f4efe4','Borovina'],['#ff5a1f','#0d1512','Narančasta'],['#ffd23f','#0d1512','Sunce'],['#ffb3c7','#0d1512','Ruža']].map(([b,c,n],i)=>`<div style="height:200px;border-radius:30px;background:${b};color:${c};padding:24px;display:grid;align-content:space-between;rotate:${[3,-2,-3,2][i]}deg;box-shadow:0 30px 60px rgba(13,21,18,.15)"><span class="tag">${n}</span><span style="font:700 24px Manrope">${b.toUpperCase()}</span></div>`).join('')}
     </div>
-    <div class="card" style="left:840px;top:620px;width:624px;height:260px;padding:34px;rotate:-1deg"><p class="syne" style="font-size:110px;line-height:.9">Aa</p><p style="font:700 26px Manrope;margin-top:14px">Syne · Manrope</p></div>
+    <div class="card" style="left:840px;top:620px;width:624px;height:260px;padding:34px;rotate:-1deg"><p class="syne" style="font-size:110px;line-height:.9">Aa</p><p style="font:700 26px Manrope;margin-top:14px">Manrope Bold</p></div>
     <div class="stk round" style="left:620px;top:690px;width:200px;height:200px;background:#ffd23f;rotate:12deg;font-size:30px">knjiga<br>standarda</div></body>`,
   'foto-video': `<body style="background:#ffd23f">
     <div class="card" style="left:180px;top:120px;width:1240px;height:760px;rotate:-2deg"><img src="${B}/assets/img/hero-3.jpg" style="width:100%;height:100%;object-fit:cover">

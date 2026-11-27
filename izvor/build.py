@@ -59,14 +59,14 @@ def head(title, desc, path, extra=None, noindex=False):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=6">
+<link rel="stylesheet" href="/assets/studio.css?v=7">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
 </script>
 </head>
 <body>
-<div class="pre" id="pre" aria-hidden="true"><i></i><b>studio23<span>k</span></b><i></i></div>
+<div class="pre" id="pre" aria-hidden="true"><i></i><b><span class="lg"></span></b><i></i></div>
 <div class="cur" aria-hidden="true"></div>
 """
 
@@ -75,7 +75,7 @@ def nav(cur):
     lis = "".join(f'<li><a href="{h}"{" class=\"tmb\"" if t == "TMBingo" else ""}{" aria-current=\"page\"" if h == cur else ""}>{t}</a></li>' for h, t in NAV)
     links = "".join(f'<a href="{h}"{" class=\"tmb\"" if t == "TMBingo" else ""}>{t}</a>' for h, t in NAV)
     return f"""<header class="nav">
-  <a class="logo" href="/" aria-label="Studio23k, naslovna">studio23<b>k</b></a>
+  <a class="logo" href="/" aria-label="Studio23k, naslovna"><span class="lg"></span></a>
   <nav aria-label="Glavna navigacija"><ul>{lis}</ul></nav>
   <div class="end">
     <button class="theme" type="button" id="theme" aria-label="Svijetla ili tamna tema" title="Svijetla / tamna tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg></button>
@@ -84,7 +84,7 @@ def nav(cur):
   </div>
 </header>
 <div class="menu" id="menu" aria-hidden="true">
-  <div class="row"><a class="logo" href="/">studio23<b>k</b></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
+  <div class="row"><a class="logo" href="/" aria-label="Studio23k, naslovna"><span class="lg"></span></a><button class="close" type="button" id="closeMenu">Zatvori</button></div>
   <nav class="links" aria-label="Izbornik">{links}<a href="/upit/">Upit</a></nav>
   <div class="row tag"><span>{MAIL}</span><span class="dim">Zadar</span></div>
 </div>
@@ -118,7 +118,7 @@ def footer(cta=True):
   <div><span class="tag">Kontakt</span><p><a href="mailto:{MAIL}">{MAIL}</a><br><a href="/upit/">Obrazac za upit</a></p></div>
   <div><span class="tag">Stranice</span><ul><li><a href="/usluge/">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
   <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
-  <p class="big" aria-hidden="true">studio23<b>k</b></p>
+  <p class="big" aria-hidden="true"><span class="lg"></span></p>
   <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno :| <a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
 </footer>
 
