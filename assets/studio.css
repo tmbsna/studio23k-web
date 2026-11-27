@@ -450,3 +450,4 @@ html.no-pre .pre { display: none; }
 @keyframes hup { from { opacity: 0; transform: translateY(.35em); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .hero h1 .l > span, .hero h1 .b2 { animation: none; opacity: 1; transform: none; } }
 .hero h1 em { padding: .02em .14em .16em; line-height: .9; vertical-align: baseline; }
+.fm .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }

@@ -4,7 +4,8 @@ import json, os, re, sys
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "."
 ADRESA = "Jakova Gotovca 18"
-MAIL = "hello@studio23k.eu"
+MAIL = "tonci@studio23k.eu"
+W3F_KEY = "4082dd29-6008-4e96-a629-a279cee98721"  # Web3Forms (javni ključ, šalje upite na tonci@studio23k.eu)
 TEL = "+385 92 405 0600"
 TMB = "https://tmbingo.com"
 UPIT = f"mailto:{MAIL}?subject=Upit%20za%20projekt"
@@ -59,7 +60,7 @@ def head(title, desc, path, extra=None, noindex=False):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=9">
+<link rel="stylesheet" href="/assets/studio.css?v=10">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
@@ -588,7 +589,7 @@ ROK = ["Što prije", "U idućih 1 do 3 mjeseca", "Nije hitno"]
 
 
 def upit():
-    chk = "".join(f'<label class="chip"><input type="checkbox" name="usluge" value="{n}" data-slug="{s}"><span>{n}</span></label>' for s, n, _ in USLUGE)
+    chk = "".join(f'<label class="chip"><input type="checkbox" name="Usluga: {n}" value="da" data-slug="{s}"><span>{n}</span></label>' for s, n, _ in USLUGE)
     bud = "".join(f'<label class="chip"><input type="radio" name="budzet" value="{b}"><span>{b}</span></label>' for b in BUDZET)
     rok = "".join(f'<label class="chip"><input type="radio" name="rok" value="{b}"><span>{b}</span></label>' for b in ROK)
     return head("Opišite projekt · Studio23k, Zadar",
@@ -601,9 +602,12 @@ def upit():
   <p>Svojim riječima, koliko god kratko ili dugo želite. Odgovaramo pisano, a kad imamo dovoljno podataka, šaljemo pisanu ponudu s cijenom i rokom.</p>
 </section>
 <section class="upit">
-  <form class="fm rv" name="upit" method="POST" action="/upit/hvala/" data-netlify="true" netlify-honeypot="bot">
-    <input type="hidden" name="form-name" value="upit">
-    <p hidden><label>Ne ispunjavajte: <input name="bot"></label></p>
+  <form class="fm rv" name="upit" method="POST" action="https://api.web3forms.com/submit">
+    <input type="hidden" name="access_key" value="{W3F_KEY}">
+    <input type="hidden" name="subject" value="Novi upit sa studio23k.eu">
+    <input type="hidden" name="from_name" value="Studio23k web">
+    <input type="hidden" name="redirect" value="https://studio23k.eu/upit/hvala/">
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
     <div class="two">
       <label class="f"><span>Ime i prezime *</span><input name="ime" required autocomplete="name"></label>
       <label class="f"><span>E-mail *</span><input type="email" name="email" required autocomplete="email"></label>
