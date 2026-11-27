@@ -404,3 +404,21 @@ html.no-pre .pre { display: none; }
 .rev .q { font: 800 90px/.6 var(--mark); color: var(--orange); }
 .rev blockquote { margin: 0; font: 600 clamp(19px, 1.6vw, 24px)/1.4 var(--body); }
 .rev figcaption { font-size: 15px; } .rev figcaption a { text-decoration: underline; }
+
+/* Vesele tekstualne face :) */
+.emo { display: inline-grid; place-items: center; min-width: 2.4em; padding: .38em .6em; border-radius: 999px; background: var(--sun); color: var(--ink); font: 800 15px/1 var(--mark); letter-spacing: -.02em; white-space: nowrap; rotate: -8deg; transition: rotate .4s cubic-bezier(.3,1.6,.5,1); }
+.emo.big { font-size: 26px; justify-self: start; background: var(--fg); color: var(--bg); }
+.steps li:hover .emo, .card:hover .emo, .rev:hover .emo, .ulist a:hover .emo, .dob li:hover .emo { rotate: 90deg; }
+.svl .ic { width: auto; min-width: 54px; padding: 0 12px; border-radius: 999px; font: 800 17px/40px var(--mark); letter-spacing: -.02em; white-space: nowrap; }
+.svl li:hover .ic { transform: rotate(90deg); }
+.card .n .emo { font-size: 13px; }
+.dob li::before { content: none; }
+.dob li { align-items: center; }
+.dob .emo { flex: none; font-size: 14px; min-width: 3.2em; }
+.dob li:nth-child(3n+2) .emo { background: var(--pink); } .dob li:nth-child(3n) .emo { background: var(--sky); }
+.ulist .im { position: relative; }
+.ulist .emo.on { position: absolute; top: 18px; right: 18px; font-size: 22px; background: var(--paper); box-shadow: 0 10px 24px rgba(13,21,18,.18); }
+.rev { position: relative; } .rev > .emo { position: absolute; top: 28px; right: 28px; background: var(--ink); color: var(--cream); font-size: 18px; }
+.revs.home { padding-top: 0; }
+:root[data-theme="dark"] .emo.big { background: var(--cream); color: var(--ink); }
+.rev:only-child { max-width: 860px; }

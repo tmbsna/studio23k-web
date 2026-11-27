@@ -9,6 +9,17 @@ TEL = "+385 92 405 0600"
 TMB = "https://tmbingo.com"
 UPIT = f"mailto:{MAIL}?subject=Upit%20za%20projekt"
 
+# Vesele tekstualne face (emotikoni) kroz cijelu stranicu
+EMO = {"web-platforme": ":)", "web-trgovine": ":D", "web-aplikacije": "B)", "brend-identitet": "<3", "foto-video": ":O", "kampanje-tisak": "xD", "seo-ai-vidljivost": ";)", "odrzavanje": "^^"}
+EMO_KARTICE = [":)", "xD", "^^", ";)", ":O", "B)"]
+EMO_KORACI = [":)", ";)", ":P", ":D"]
+
+
+def emo(t, cls=""):
+    t = t.replace("<", "&lt;")
+    return f'<span class="emo{(" " + cls) if cls else ""}" aria-hidden="true">{t}</span>'
+
+
 NAV = [("/usluge/", "Usluge"), ("/radovi/", "Radovi"), ("/#studio", "Studio"), ("/tmbingo/", "TMBingo")]
 
 SCHEMA_ORG = {
@@ -48,7 +59,7 @@ def head(title, desc, path, extra=None, noindex=False):
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
-<link rel="stylesheet" href="/assets/studio.css?v=5">
+<link rel="stylesheet" href="/assets/studio.css?v=6">
 <script>(function(){{var d=document.documentElement;try{{var s=localStorage.getItem('s23k-tema');if(s)d.dataset.theme=s;if(sessionStorage.getItem('s23k-pre'))d.classList.add('no-pre');sessionStorage.setItem('s23k-pre','1')}}catch(e){{}}}})();</script>
 <script type="application/ld+json">
 {json.dumps(sc if len(sc) > 1 else sc[0], ensure_ascii=False, indent=1)}
@@ -95,7 +106,7 @@ def marquee(words, cls="", href=None, n=6):
 def footer(cta=True):
     return (f"""<section class="cta" id="kontakt">
   {round_sticker("bez sastanaka · bez sastanaka · ", "✍", "s9", 10)}
-  <h2 class="rv">Imate ideju?<br>Napišite <span class="o">je.</span></h2>
+  <h2 class="rv">Imate ideju?<br>Napišite <span class="o">je ;)</span></h2>
   <p class="lead rv">Bez kave, poziva i sastanaka. Opišite projekt svojim riječima, a pisanu ponudu dobivate na mail.</p>
   <div class="row rv">
     <a class="mail" href="{UPIT}" data-cur="Pišite">{MAIL}</a>
@@ -108,13 +119,13 @@ def footer(cta=True):
   <div><span class="tag">Stranice</span><ul><li><a href="/usluge/">Usluge</a></li><li><a href="/radovi/">Radovi</a></li><li><a href="/#studio">Studio</a></li><li><a class="g" href="/tmbingo/">TMBingo by Studio23k</a></li></ul></div>
   <div><span class="tag">Mala firma?</span><p>Web, dizajn i mreže od 199 € mjesečno.<br><a class="g" href="{TMB}/" target="_blank" rel="noopener">tmbingo.com ↗</a></p></div>
   <p class="big" aria-hidden="true">studio23<b>k</b></p>
-  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno: <a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
+  <div class="bottom"><span>© 2026 Studio23k · OIB 13393375189 · obrt nije u sustavu PDV-a</span><span>Dosadno, ali važno :| <a href="{TMB}/privatnost.html">Privatnost</a> · <a href="{TMB}/uvjeti.html">Uvjeti</a> · <a href="{TMB}/cjenik/">Cjenik</a></span></div>
 </footer>
 
 <div class="chat" id="chat">
   <div class="win" role="dialog" aria-label="Poruka Studio23k">
     <div class="top"><i></i><b>Studio23k</b><span class="dim">· Zadar</span></div>
-    <div class="msgs"><p class="msg">Bok! 👋</p><p class="msg">Imate projekt na umu ili vam treba nešto manje za firmu? Napišite, odgovaramo pisano.</p></div>
+    <div class="msgs"><p class="msg">Bok! :)</p><p class="msg">Imate projekt na umu ili vam treba nešto manje za firmu? Napišite, odgovaramo pisano.</p></div>
     <div class="opts"><a href="/upit/">Opisat ću projekt</a><a class="g" href="/tmbingo/">Mala sam firma</a><a href="{UPIT}">Pišem mail</a></div>
   </div>
   <button class="btn" type="button" aria-label="Otvori poruke" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button>
@@ -190,8 +201,8 @@ def faq_schema(items):
 
 
 def index():
-    svc = "\n      ".join(f'<li class="rv"><span class="tag">{i:02d}</span><h3><a href="/usluge/{slug}/" data-cur="Više">{n}</a></h3><p>{d}</p><span class="ic" aria-hidden="true">→</span></li>' for i, (slug, n, d) in enumerate(USLUGE, 1))
-    cards = "\n      ".join(f'<article class="card"><div class="n tag"><span>{i:02d} / {len(KARTICE):02d}</span><span>✦</span></div><b>{big}<small>{small}</small></b><p>{p}</p></article>' for i, (big, small, p) in enumerate(KARTICE, 1))
+    svc = "\n      ".join(f'<li class="rv"><span class="tag">{i:02d}</span><h3><a href="/usluge/{slug}/" data-cur="Više">{n}</a></h3><p>{d}</p><span class="ic" aria-hidden="true">{EMO[slug].replace("<", "&lt;")}</span></li>' for i, (slug, n, d) in enumerate(USLUGE, 1))
+    cards = "\n      ".join(f'<article class="card"><div class="n tag"><span>{i:02d} / {len(KARTICE):02d}</span>{emo(EMO_KARTICE[i - 1])}</div><b>{big}<small>{small}</small></b><p>{p}</p></article>' for i, (big, small, p) in enumerate(KARTICE, 1))
     work = "\n      ".join(work_item(r) for r in RADOVI[:4])
     cloud = "".join(f"<span>{k}</span>" for k in KLIJENTI)
     return head("Studio23k · Digitalni studio iz Zadra: web, brend, aplikacije",
@@ -203,7 +214,7 @@ def index():
   <figure class="float f2" data-float="-0.22"><img src="/assets/radovi/focx.jpg" alt="" width="1200" height="900"></figure>
   <figure class="float f3" data-float="-0.06"><img src="/assets/radovi/frida.jpg" alt="" width="1200" height="900"></figure>
   {round_sticker("iz zadra s ljubavlju · iz zadra s ljubavlju · ", "23k", "s1")}
-  <div class="stk tape s2" aria-hidden="true">Figma prije koda ✍️</div>
+  <div class="stk tape s2" aria-hidden="true">Figma prije koda :P</div>
   <h1><span class="l"><span>Kreiramo</span></span><span class="l"><span><em>doživljaj</em><span class="o">.</span></span></span></h1>
   <div class="sub">
     <p>Digitalni studio iz Zadra za projekte kojima ne treba predložak, nego netko tko će ih stvarno razumjeti.</p>
@@ -251,6 +262,8 @@ def index():
 
 {marquee(["Radili smo s", "Radili smo s"], "s rev", n=4)}
 <section class="cl"><span class="tag" style="padding-top:60px">( Klijenti )</span><div class="cloud rv">{cloud}</div></section>
+
+{recenzije_html("", SVE_RECENZIJE)}
 
 <section class="ways" id="nacini">
   <div class="way s23 rv">
@@ -356,7 +369,7 @@ def tmbingo():
 
 def nf():
     return head("Stranica nije pronađena · Studio23k", "Ova stranica ne postoji.", "/404.html") + nav("") + f"""
-<main><section class="phead"><h1>Ups<span class="o">.</span></h1><p>Ova stranica je negdje odlutala. <a class="pill" href="/" style="margin-top:20px">Natrag na naslovnu →</a></p></section></main>
+<main><section class="phead"><h1>Ups <span class="o">:(</span></h1><p>Ova stranica je negdje odlutala. <a class="pill" href="/" style="margin-top:20px">Natrag na naslovnu →</a></p></section></main>
 """ + footer(False)
 
 
@@ -369,7 +382,7 @@ PROCES = [
 
 
 def steps_html(h="Kako radimo.<br>Bez sastanaka."):
-    li = "".join(f'<li class="rv"><span class="tag">{i:02d}</span><h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(PROCES, 1))
+    li = "".join(f'<li class="rv"><span class="tag">{i:02d}</span>{emo(EMO_KORACI[i - 1], "big")}<h3>{t}</h3><p>{d}</p></li>' for i, (t, d) in enumerate(PROCES, 1))
     return f"""<section class="steps" id="proces">
   <div class="sec-h"><h2 class="rv">{h}</h2><p class="rv">Sve ide online i pisano. Manje kave i poziva, više vremena za sam projekt.</p></div>
   <ol>{li}</ol>
@@ -382,7 +395,7 @@ USLUGE_DETALJI = {
         title="Izrada web stranica po mjeri, Zadar · Studio23k",
         desc="Višejezične web stranice i platforme po mjeri: rezervacije, prijave i integracije s alatima koje već koristite. Studio23k iz Zadra, dizajn prvo u Figmi.",
         lead="Za firme kojima predložak nije dovoljan: više jezika, rezervacije, prijave i veza s alatima koje već koristite. Dizajn crtamo od nule i prvo ga odobrite u Figmi.",
-        stk="po mjeri · po mjeri · ", big="✦",
+        stk="po mjeri · po mjeri · ", big="",
         dob=["Dizajn od nule, prvo u Figmi", "Više jezika (HR, EN, DE i drugi)", "Rezervacije, upiti i prijave", "Integracije s CRM-om, kalendarom ili ERP-om", "Brz web, pripremljen za Google i AI asistente", "Testirano na mobitelu, tabletu i računalu"],
         za="Turizam, nekretnine, usluge i firme s više jezika ili s procesom koji gotovi predlošci ne pokrivaju.",
         radovi=["frida", "ldesign", "dalmatica", "protex"],
@@ -393,7 +406,7 @@ USLUGE_DETALJI = {
         title="Izrada web trgovine po mjeri, Zadar · Studio23k",
         desc="Web trgovine po mjeri: katalog, košarica, plaćanje karticama, dostava i veza sa skladištem ili knjigovodstvom. Studio23k iz Zadra.",
         lead="Trgovina koja prodaje i kad ste offline: pregledan katalog, jednostavna košarica, plaćanje karticama i dostava. Povezujemo je sa skladištem ili knjigovodstvom kad to ima smisla.",
-        stk="+1 narudžba · +1 narudžba · ", big="🛒",
+        stk="+1 narudžba · +1 narudžba · ", big="",
         dob=["Katalog s filterima i varijantama", "Košarica i plaćanje karticama", "Dostava, kuponi i obavijesti kupcima", "Veza sa skladištem ili knjigovodstvom", "SEO za kategorije i proizvode", "Fotografije proizvoda, po dogovoru"],
         za="Trgovci koji prodaju online ili tek kreću, od par desetaka do tisuća proizvoda.",
         radovi=["goveer", "focx", "dizajnpro"],
@@ -404,7 +417,7 @@ USLUGE_DETALJI = {
         title="Web aplikacije i poslovni sustavi po mjeri · Studio23k Zadar",
         desc="CRM, portali za klijente, sustavi narudžbi i automatizacija ručnog posla. Web aplikacije po mjeri iz Zadra.",
         lead="Kad se posao vodi u deset tablica i stotinu mailova, vrijeme je za sustav. Radimo CRM-ove, portale za klijente i narudžbe, i automatiziramo ono što se danas radi ručno.",
-        stk="manje ručnog posla · ", big="⚡",
+        stk="manje ručnog posla · ", big="",
         dob=["Pisana analiza posla koji želite olakšati", "CRM, portal za klijente ili sustav narudžbi", "Uloge i prava pristupa", "Automatske obavijesti i izvještaji", "Integracije s postojećim alatima", "Održavanje i nadogradnje nakon lansiranja"],
         za="Firme koje rastu brže od svojih tablica i žele manje ručnog prepisivanja.",
         radovi=[],
@@ -415,7 +428,7 @@ USLUGE_DETALJI = {
         title="Brend identitet i dizajn loga, Zadar · Studio23k",
         desc="Logo, boje, tipografija i knjiga standarda: brend identitet koji jednako radi na webu, u tisku i na mrežama. Studio23k iz Zadra.",
         lead="Ime, znak, boje i tipografija koji drže zajedno na webu, ambalaži, plakatu i Instagramu. Na kraju dobivate sustav, a ne samo logo.",
-        stk="knjiga standarda · ", big="Aa",
+        stk="knjiga standarda · ", big="",
         dob=["Logo i njegove varijante", "Paleta boja i tipografija", "Knjiga standarda (PDF)", "Posjetnice, memorandum i predlošci", "Predlošci za društvene mreže", "Sve datoteke za tisak i web"],
         za="Novi brendovi, firme pred redizajnom i svi kojima logo izgleda drukčije na svakom mjestu.",
         radovi=["antuntun"],
@@ -426,7 +439,7 @@ USLUGE_DETALJI = {
         title="Fotografija proizvoda i video produkcija, Zadar · Studio23k",
         desc="Fotografija i video proizvoda, prostora i događaja za web, kampanje i društvene mreže. Studio23k iz Zadra.",
         lead="Proizvodi, prostori i događaji, snimljeni tako da rade na webu, u kampanji i na mrežama. Plan snimanja dogovaramo pisano, da na dan snimanja nema iznenađenja.",
-        stk="akcija! · akcija! · ", big="●",
+        stk="akcija! · akcija! · ", big="",
         dob=["Pisani plan snimanja (popis kadrova)", "Fotografija proizvoda i prostora", "Kratki video za mreže i web", "Obrada i prilagodba formata", "Datoteke spremne za web i tisak"],
         za="Trgovine, turizam, ugostitelji i brendovi kojima trebaju vlastite fotografije umjesto fotografija s interneta. Za veća snimanja uključujemo suradnike za fotografiju i video.",
         radovi=[],
@@ -437,7 +450,7 @@ USLUGE_DETALJI = {
         title="Dizajn kampanja, jumbo plakata i tiskovina · Studio23k Zadar",
         desc="Jumbo plakati, katalozi, meniji, letci i oglasi: dizajn kampanja spreman za tisak i objavu. Studio23k iz Zadra.",
         lead="Jumbo plakati, katalozi, meniji i oglasi koji izgledaju kao dio istog brenda. Pripremamo ih za tiskaru i za objavu, u svim formatima koje trebate.",
-        stk="spremno za tisak · ", big="A5",
+        stk="spremno za tisak · ", big="",
         dob=["Ideja i ključni vizual kampanje", "Jumbo plakati i vanjsko oglašavanje", "Katalozi, meniji i letci", "Oglasi za mreže i web", "Priprema za tisak (CMYK, napust za rez)", "Komunikacija s tiskarom, po dogovoru"],
         za="Ugostitelji, trgovine, nekretnine i brendovi pred sezonom, otvorenjem ili novom ponudom.",
         radovi=[],
@@ -448,7 +461,7 @@ USLUGE_DETALJI = {
         title="SEO i AI vidljivost, Zadar · Studio23k",
         desc="SEO, Google Business profil i vidljivost u AI asistentima kao što su ChatGPT, Gemini i Claude. Tehnički SEO, strukturirani podaci i sadržaj. Studio23k iz Zadra.",
         lead="Da vas nađu kad netko traži ono što radite: na Googleu, na kartama i u AI asistentima, koji sve češće odgovaraju umjesto tražilice.",
-        stk="google · karte · AI · ", big="✦",
+        stk="google · karte · AI · ", big="",
         dob=["Tehnički pregled i popravci", "Strukturirani podaci (schema.org)", "Google Business profil", "Sadržaj za stranice i usluge", "llms.txt i pristup AI botovima", "Pisani izvještaj o napretku, po dogovoru"],
         za="Firme koje imaju dobar web, ali ih ljudi ne nalaze kad traže ono što rade.",
         radovi=[],
@@ -459,7 +472,7 @@ USLUGE_DETALJI = {
         title="Održavanje web stranica i podrška, Zadar · Studio23k",
         desc="Hosting, sigurnosne kopije, ažuriranja i izmjene sadržaja. Održavanje web stranica, s jednom osobom koja zna vaš projekt i zahtjevima koji idu pisano.",
         lead="Web nije gotov na dan lansiranja. Brinemo za hosting, sigurnost, kopije i izmjene, a zahtjeve šaljete pisano i pratite ih bez telefoniranja.",
-        stk="mirni ste · mirni ste · ", big="✓",
+        stk="mirni ste · mirni ste · ", big="",
         dob=["Hosting i domena", "Redovite sigurnosne kopije", "Ažuriranja i sigurnost", "Izmjene sadržaja po zahtjevu", "Praćenje rada weba", "Svaki zahtjev pisano i zapisan"],
         za="Firme kojima web mora raditi, a nemaju vremena ni volje baviti se njime.",
         radovi=[],
@@ -480,14 +493,21 @@ USLUGE_ALT = {
 RAD = {r[0]: r for r in RADOVI}
 
 # Recenzije klijenata po usluzi: samo stvarne, doslovno od klijenta. (citat, ime, firma/uloga, poveznica ili "")
+_SNAAP = ("Snažna arhitektura platforme i jasan koncept koji je Studio23k postavio bili su presudni da u prvom krugu osiguramo investicije. Sada smo spremni skalirati i preuzeti tržište. Nisu odradili samo tehnički posao, bili su naši pravi strateški partneri.", "Tonći", "Snaap", "")
+_FRIDA = ("Prije suradnje, mislili smo da su društvene mreže samo usputna stavka bez pravog dosega. Studio23k nam je potpuno promijenio perspektivu. Pokazali su nam kako se gradi stvarna digitalna prisutnost i gdje se zapravo kriju naši najvrjedniji klijenti.", "Šime", "Frida", "https://frida-zadar.hr/")
+_INES = ("Uvijek smo vjerovali da je kvaliteta naše usluge dovoljna. Studio23k nas je naučio da vrhunski rad zaslužuje jednako snažan vizualni doživljaj. Sada naš koncept i dizajn jasno komuniciraju našu vrijednost i prije nego što klijent uopće uđe kroz vrata.", "Matea", "Frizerski salon Ines", "")
+_FOCX = ("Redizajn našeg web shopa nije donio samo novi izgled, donio je opipljive rezultate. Kupci nam se sami javljaju kako bi pohvalili besprijekorno i intuitivno iskustvo kupovine. Studio23k je od našeg weba napravio našeg najboljeg prodavača.", "Serkan", "Focx", "https://focx.store/")
 RECENZIJE = {s: [] for s in USLUGE_DETALJI}
+RECENZIJE.update({"web-platforme": [_SNAAP], "web-aplikacije": [_SNAAP], "web-trgovine": [_FOCX], "brend-identitet": [_INES], "seo-ai-vidljivost": [_FRIDA], "kampanje-tisak": [_FRIDA]})
+# naslovna: sve četiri recenzije
+SVE_RECENZIJE = [_SNAAP, _FOCX, _INES, _FRIDA]
 
 
-def recenzije_html(slug):
-    rs = RECENZIJE.get(slug) or []
+def recenzije_html(slug, rs=None):
+    rs = rs if rs is not None else (RECENZIJE.get(slug) or [])
     if not rs:
         return ""
-    cards = "".join(f'<figure class="rev rv"><span class="q" aria-hidden="true">“</span><blockquote><p>{q}</p></blockquote><figcaption><b>{n}</b>{(" · " + (f'<a href="{u}" target="_blank" rel="noopener">{f}</a>' if u else f)) if f else ""}</figcaption></figure>' for q, n, f, u in rs)
+    cards = "".join(f'<figure class="rev rv"><span class="q" aria-hidden="true">“</span>{emo(":)")}<blockquote><p>{q}</p></blockquote><figcaption><b>{n}</b>{(" · " + (f'<a href="{u}" target="_blank" rel="noopener">{f}</a>' if u else f)) if f else ""}</figcaption></figure>' for q, n, f, u in rs)
     return f"""<section class="revs">
   <div class="sec-h"><h2 class="rv">Što kažu<br>klijenti<span class="o">.</span></h2></div>
   <div class="rg">{cards}</div>
@@ -505,7 +525,7 @@ def usluga(i, slug, name, short):
     svc_schema = {"@context": "https://schema.org", "@type": "Service", "name": name, "serviceType": name, "description": d["desc"],
                   "url": "https://studio23k.eu" + path, "image": f"https://studio23k.eu/assets/usluge/{slug}.jpg",
                   "provider": {"@id": "https://studio23k.eu/#studio"}, "areaServed": [{"@type": "City", "name": "Zadar"}, {"@type": "Country", "name": "Hrvatska"}]}
-    dob = "".join(f"<li>{x}</li>" for x in d["dob"])
+    dob = "".join(f"<li>{emo(EMO[slug])}<span>{x}</span></li>" for x in d["dob"])
     rad = ""
     if d["radovi"]:
         rad = f"""<section class="work" style="padding-top:0">
@@ -516,7 +536,7 @@ def usluga(i, slug, name, short):
     return head(d["title"], d["desc"], path, [svc_schema, faq_schema(d["faq"]), crumbs([("Studio23k", "/"), ("Usluge", "/usluge/"), (name, path)])]) + nav("/usluge/") + f"""
 <main>
 <section class="phead uhead">
-  {round_sticker(d["stk"], d["big"], "s8", 8)}
+  {round_sticker(d["stk"], EMO[slug].replace("<", "&lt;"), "s8", 8)}
   <p class="crumb tag"><a href="/usluge/">Usluge</a> / {i:02d}</p>
   <h1>{name}<span class="o">.</span></h1>
   <p>{d["lead"]}</p>
@@ -542,7 +562,7 @@ def usluga(i, slug, name, short):
 
 
 def usluge_index():
-    li = "\n  ".join(f'<li class="rv"><a href="/usluge/{s}/" data-cur="Više"><span class="im"><img src="/assets/usluge/{s}.jpg" alt="" width="1600" height="1000" loading="lazy"></span><span class="tag">{i:02d}</span><h2>{n}</h2><p>{dsc}</p></a></li>' for i, (s, n, dsc) in enumerate(USLUGE, 1))
+    li = "\n  ".join(f'<li class="rv"><a href="/usluge/{s}/" data-cur="Više"><span class="im"><img src="/assets/usluge/{s}.jpg" alt="" width="1600" height="1000" loading="lazy">{emo(EMO[s], "on")}</span><span class="tag">{i:02d}</span><h2>{n}</h2><p>{dsc}</p></a></li>' for i, (s, n, dsc) in enumerate(USLUGE, 1))
     lst = {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": n, "url": f"https://studio23k.eu/usluge/{s}/"} for i, (s, n, _) in enumerate(USLUGE, 1)]}
     return head("Usluge · Studio23k, Zadar: web, trgovine, aplikacije, brend",
@@ -610,7 +630,7 @@ def hvala():
     return head("Hvala na upitu · Studio23k", "Upit je poslan.", "/upit/hvala/", noindex=True) + nav("") + f"""
 <main><section class="phead">
   {round_sticker("hvala · hvala · hvala · ", "✓", "s6", 8)}
-  <h1>Hvala<span class="o">.</span></h1>
+  <h1>Hvala <span class="o">:)</span></h1>
   <p>Upit je stigao. Pročitat ćemo ga i javiti se pisano na vaš e-mail. Ako se sjetite još nečega, samo odgovorite na naš mail ili pišite na <a class="u" href="mailto:{MAIL}">{MAIL}</a>.</p>
   <div class="acts" style="margin-top:30px"><a class="pill" href="/radovi/">Pogledajte radove <span class="ar">→</span></a></div>
 </section></main>
