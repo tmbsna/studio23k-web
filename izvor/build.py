@@ -479,6 +479,20 @@ USLUGE_ALT = {
 }
 RAD = {r[0]: r for r in RADOVI}
 
+# Recenzije klijenata po usluzi: samo stvarne, doslovno od klijenta. (citat, ime, firma/uloga, poveznica ili "")
+RECENZIJE = {s: [] for s in USLUGE_DETALJI}
+
+
+def recenzije_html(slug):
+    rs = RECENZIJE.get(slug) or []
+    if not rs:
+        return ""
+    cards = "".join(f'<figure class="rev rv"><span class="q" aria-hidden="true">“</span><blockquote><p>{q}</p></blockquote><figcaption><b>{n}</b>{(" · " + (f'<a href="{u}" target="_blank" rel="noopener">{f}</a>' if u else f)) if f else ""}</figcaption></figure>' for q, n, f, u in rs)
+    return f"""<section class="revs">
+  <div class="sec-h"><h2 class="rv">Što kažu<br>klijenti<span class="o">.</span></h2></div>
+  <div class="rg">{cards}</div>
+</section>"""
+
 
 def crumbs(items):
     return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -513,6 +527,7 @@ def usluga(i, slug, name, short):
   <div class="rv"><span class="tag">( Što dobivate )</span><ul class="dob">{dob}</ul></div>
   <aside class="za rv"><span class="tag">Za koga</span><p>{d["za"]}</p><span class="tag" style="margin-top:22px">Cijena</span><p>Pisana ponuda po projektu, nakon što opišete što trebate.</p></aside>
 </section>
+{recenzije_html(slug)}
 {steps_html("Kako ide.<br>Bez sastanaka.")}
 {rad}
 <section class="faq">

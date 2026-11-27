@@ -395,3 +395,12 @@ html.no-pre .pre { display: none; }
 :root[data-theme="dark"] .za { background: #050e0b; }
 :root[data-theme="dark"] .steps li:nth-child(1), :root[data-theme="dark"] .steps li:nth-child(3) { color: var(--ink); }
 .chip span { text-transform: none; letter-spacing: 0; }
+/* Recenzije klijenata na podstranicama usluga */
+.revs { padding: 0 var(--gx) 130px; }
+.revs .rg { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.rev { margin: 0; border-radius: var(--r); padding: 34px; background: var(--sun); color: var(--ink); display: grid; gap: 20px; align-content: space-between; transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+.rev:nth-child(3n+2) { background: var(--pink); } .rev:nth-child(3n) { background: var(--sky); }
+.rev:hover { transform: rotate(-1.2deg); }
+.rev .q { font: 800 90px/.6 var(--mark); color: var(--orange); }
+.rev blockquote { margin: 0; font: 600 clamp(19px, 1.6vw, 24px)/1.4 var(--body); }
+.rev figcaption { font-size: 15px; } .rev figcaption a { text-decoration: underline; }
